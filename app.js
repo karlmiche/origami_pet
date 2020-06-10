@@ -33,6 +33,8 @@ let thePet = {
     awake: true
 }
 
+console.log(thePet);
+
 //canvas details
 canvas.width = 400;
 canvas.height = 400;
@@ -50,7 +52,7 @@ localStorage.setItem("thePet", "health");
 localStorage.setItem("thePet", "hunger");
 localStorage.setItem("thePet", "happiness");
 localStorage.setItem("thePet", "clean");
-var getMyPet = localStorage.getItem("key");
+// var getMyPet = localStorage.getItem("key");
 
 /************dateObject functions**********/
 //this will update the time on the page and internally
@@ -82,6 +84,13 @@ function gettingMinutes() {
 function lessHappy () {
     //if it is a 10 minute time
     //decrement happiness by 10
+    if(m === 00 | m === 10 | m === 20 | m === 30 | m === 40 | m === 50){
+        thePet.happiness - 10;
+        console.log(thePet.happiness); 
+    }
+
+lessHappy();
+
 }
 
 function lessFull () {
@@ -99,11 +108,25 @@ function lessHealth () {
 }
 
 /**********Click Events for Specific Objects*************/
-function moreHappy () {}
+function moreHappy () {
+    //click event on present, guitar, mascHat, femmeHat, crystal
+    //increment happiness by +5
+}
 
-function moreFull () {}
+function moreFull () {
+    //click event on bubbleTea, peanuts, cannedFood, taco,
+    //burrito
+    //increment hunger by 5
+}
 
-function moreClean () {}
+function moreClean () {
+    //click event on toothbrush, soap
+    //increment clean by 5
+}
 
-function moreHealth () {}
-/**************Game Logic for Specific Objects************/
+function moreHealth () {
+    //click event on stethoscope, herb, water, pill
+    //increment health by 5
+}
+
+/************Sleeping Function***********/
