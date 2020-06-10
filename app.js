@@ -2,24 +2,55 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const beer = document.getElementById("beer");
-const pet = document.getElementById("pet-awake");
+const petAwake = document.getElementById("pet-awake");
 const burrito = document.getElementById("burrito");
 const pill = document.getElementById("pill");
+const crystal = document.getElementById("crystal"); 
+const bubbleTea = document.getElementById("bubbleTea"); 
+const mascHat = document.getElementById("masc-hat");
+const femmeHat = document.getElementById("femme-hat");
+const water = document.getElementById("water");
+const peanuts = document.getElementById("peanuts");
+const cannedFood = document.getElementById("cannedFood");
+const taco = document.getElementById("taco");
+const present = document.getElementById("present");
+const stethoscope = document.getElementById("stethoscope");
+const herb = document.getElementById("herb");
+const soap = document.getElementById("soap");
+const toothbrush = document.getElementById("toothbrush");
+const guitar = document.getElementById("guitar");
+const happy = document.getElementById("happy");
+const hungry = document.getElementById("hungry");
+const healthy = document.getElementById("healthy");
+const clean = document.getElementById("clean");
+
+/*****Initalize thePet**************/
+let thePet = {
+    health: 100,
+    hunger: 100,
+    happiness: 100,
+    clean: 100,
+    awake: true
+}
 
 //canvas details
 canvas.width = 400;
 canvas.height = 400;
 
 
-//Billy the Pet
+//the Pet awakens
 window.onload = function() {
-    ctx.drawImage(pet, 50, 90);
+    ctx.drawImage(petAwake, 50, 90);
   };
 
 ctx.font = "14px monospace";
-ctx.fillText("Pet is watching you intently...", 50, 50)
 
 //********Local Storage Information**************/
+localStorage.setItem("thePet", "health");
+localStorage.setItem("thePet", "hunger");
+localStorage.setItem("thePet", "happiness");
+localStorage.setItem("thePet", "clean");
+var getMyPet = localStorage.getItem("key");
 
 /************dateObject functions**********/
 //this will update the time on the page and internally
@@ -46,20 +77,26 @@ function gettingMinutes() {
   gettingMinutes();
   console.log(gettingMinutes);
 
-/*****Initalize Counters for needs**************/
-let happiness = 100;
-let health = 100;
-let hunger = 100;
-let clean = 100;
 
 /*********** Decrementing intervals for needs*******/
-function lessHappy () {}
+function lessHappy () {
+    //if it is a 10 minute time
+    //decrement happiness by 10
+}
 
-function lessFull () {}
+function lessFull () {
+    //if it is a 15 minute time
+    //decrement hunger by 15
+}
 
-function lessClean () {}
+function lessClean () {
+    //if it is past a certain time
+    //decrement clean by 5
+}
 
-function lessHealth () {}
+function lessHealth () {
+    //every 30 min decrement health by 20
+}
 
 /**********Click Events for Specific Objects*************/
 function moreHappy () {}
