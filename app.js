@@ -57,56 +57,68 @@ localStorage.setItem("thePet", "clean");
 /************dateObject functions**********/
 //this will update the time on the page and internally
 //so we can base conditional logic off of what time it IS
-
-function addZero(i) {
-    if (i < 10) {
-      i = "0" + i;
-    }
-    return i;
+  const now = new Date();
+  console.log(now);
+  function upDate () {
+    const now = new Date();
+    document.getElementById("time2").innerHTML = now;
+    lessHappy();
+    lessClean();
+    lessFull();
+    lessFull();
+      //I want this to continually update with the second
   }
-
-function gettingMinutes() {
-    var d = new Date();
-    var t = document.getElementById("time");
-    var h = addZero(d.getHours());
-    var m = addZero(d.getMinutes());
-    var s = addZero(d.getSeconds());
-    t.innerHTML = h + ":" + m + ":" + s;
-
-    setTimeout(gettingMinutes, 1000);
-  }
-
-  gettingMinutes();
-  console.log(gettingMinutes);
-
+  
+  setInterval(upDate,
+  1000);
+  //set m to now.getMinutes()
+  let m = now.getMinutes();
+  //this is working
+  console.log(m);
 
 /*********** Decrementing intervals for needs*******/
 function lessHappy () {
     //if it is a 10 minute time
+    let m = now.getMinutes();
+    if(m === 0 || m === 10 || m === 20 || m === 30 || m === 40 || m === 50){
     //decrement happiness by 10
-    if(m === 00 | m === 10 | m === 20 | m === 30 | m === 40 | m === 50){
         thePet.happiness - 10;
-        console.log(thePet.happiness); 
+        console.log("🩰", thePet.happiness);
+        }
     }
 
-lessHappy();
 
-}
 
 function lessFull () {
     //if it is a 15 minute time
-    //decrement hunger by 15
+    if(m === 5 || m === 15 || m === 25 || m === 35 || m === 45 || m === 55){
+            //decrement hunger by 15
+        thePet.hunger - 15;
+        console.log(thePet.hunger)
+    }
 }
+
+lessFull();
 
 function lessClean () {
     //if it is past a certain time
-    //decrement clean by 5
+    if(m === 00 || m === 30){
+        thePet.clean - 30;
+        console.log(thePet.clean);
+    }
 }
+
+lessClean();
 
 function lessHealth () {
-    //every 30 min decrement health by 20
+    if(m === 00 || m === 20 || m === 40){
+        thePet.health - 20;
+        console.log(thePet.health);
+    }
+    //every 20 min decrement health by 20
 }
 
+lessHealth();
 /**********Click Events for Specific Objects*************/
 function moreHappy () {
     //click event on present, guitar, mascHat, femmeHat, crystal
@@ -129,4 +141,8 @@ function moreHealth () {
     //increment health by 5
 }
 
-/************Sleeping Function***********/
+/************Hibernation Function***********/
+
+/**************JavaScript Animations***************/
+
+/****************Archive Box*****************/
