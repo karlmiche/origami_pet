@@ -3,18 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lexend+Tera&family=Lexend+Zetta&display=swap');
+        </style>
     <title>Origami Pet</title>
 </head>
 <body id="body">
-    <h1>Origami Pet</h1>
-    <p>You've been asked to attend an Origami Pet from the local Folded Zoo.
-        This pet has plenty of needs and you must help the keeper and this Pet
-        thrive. Click around the Pet's environment to see what keeps its needs in check!
-        Be careful, it the Pet's needs drop below a critical level, it will hibernate 
-        until you take good care once more. 
+
+    <div class="heading">
+    <h3>Origami Pet</h3>
+    <p>You've been asked to tend to an Origami Pet from the local Folded Zoo.
+        This pet has plenty of needs and you must help it
+        thrive. Click specific objects to see what keeps its needs in check!
+        Be careful, if the Pet's needs drop below a critical level, it will hibernate 
+        until taken care of again. 
     </p>
+
+    <div class="status-container">
+        <br>
+        <div class="happiness">Happiness: 50</div><br>
+        <div class="health">Health: 50</div><br>
+        <div class="hunger">Hunger: 50</div><br>
+        <div class="hunger">Cleanliness: 50</div>
+    </div>
+
+    </div>
+
     <div class="canvas-container">
         <canvas id="canvas"></canvas>
     </div>
+
+    <span class="date">Time and Date: </span>
+
+        <!--the Pet-->
+        <div style="display:none;">
+            <img id="pet-awake" src="./game assets/Origami Pet.png">
+        </div>
+
+        <div style="display:none;">
+            <img id="beer" src="./game assets/beer.png">
+        </div>
+        
+        <!--The Pet's Things-->
+        
+        <div class="toy-box">
+        <div>
+            <img id="burrito" src="./game assets/burrito.png">
+        </div>
+        <div>
+            <img id="pill" src="./game assets/pill.png">
+        </div>  
+        <div>
+            <img id="guitar" src="./game assets/guitar.png">
+        </div> 
+        <div>
+            <img id="toothbrush" src="./game assets/toothbrush.png">
+        </div> 
+        <div>
+            <img id="soap" src="./game assets/soap.png">
+        </div> 
+        <div>
+            <img id="stethoscope" src="./game assets/stethoscope.png">
+        </div> 
+        <div>
+            <img id="present" src="./game assets/wrapped-present.png">
+        </div>
+        <div>
+            <img id="herb" src="./game assets/herb.png">
+        </div>
+    </div>
+
+
+    <script src="app.js"></script>
 </body>
 </html>
