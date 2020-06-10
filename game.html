@@ -11,66 +11,87 @@
 </head>
 <body id="body">
 
+       <!--The Pet's Things 1-->
+        
+       <div class="toy-box1">
+        <div>
+            <img class="emoji" id="crystal" src="./game assets/crystal.png">
+        </div>
+        <div>
+            <img class="emoji" id="bubbleTea" src="./game assets/bubble_tea.png">
+        </div>  
+        <div>
+            <img class="emoji" id="masc-hat" src="./game assets/hat.png">
+        </div> 
+        <div>
+            <img class="emoji" id="femme-hat" src="./game assets/femme_hat.png">
+        </div> 
+        <div>
+            <img class="emoji" id="water" src="./game assets/water.png">
+        </div> 
+        <div>
+            <img class="emoji" id="peanuts" src="./game assets/peanuts.png">
+        </div> 
+        <div>
+            <img class="emoji" id="cannedFood" src="./game assets/canned_food.png">
+        </div>
+        <div>
+            <img class="emoji" id="taco" src="./game assets/taco.png">
+        </div>
+    </div>
+
+<div class="heading-canvas">
     <div class="heading">
-    <h3>Origami Pet</h3>
-    <p>You've been asked to tend to an Origami Pet from the local Folded Zoo.
-        This pet has plenty of needs and you must help it
-        thrive. Click specific objects to see what keeps its needs in check!
-        Be careful, if the Pet's needs drop below a critical level, it will hibernate 
-        until taken care of again. 
-    </p>
-
-    <div class="status-container">
-        <br>
-        <div class="happiness">Happiness: 50</div><br>
-        <div class="health">Health: 50</div><br>
-        <div class="hunger">Hunger: 50</div><br>
-        <div class="hunger">Cleanliness: 50</div>
+        <h3>Origami Pet</h3>
+        <p>You've been asked to tend to an Origami Pet from the local Folded Zoo.
+            This Pet has plenty of needs and you must help it
+            thrive. Click specific objects to see what keeps its needs in check!
+            Be careful, if the Pet's needs drop below a critical level, it will hibernate!
+        </p>
+        <div class="status-container">
+            <br>
+            <button id="happy" class="status">Happiness: 100</button><br>
+            <button id="healthy" class="status">Health: 100</button><br>
+            <button id="hungry" class="status">Hunger: 100</button><br>
+            <button id="clean" class="status">Hygiene: 100</button>
+        </div>
     </div>
-
-    </div>
-
-    <div class="canvas-container">
         <canvas id="canvas"></canvas>
-    </div>
+</div>
 
-    <span class="date">Time and Date: </span>
+<div class="time-display"><span id="time"></span></div>
 
         <!--the Pet-->
         <div style="display:none;">
             <img id="pet-awake" src="./game assets/Origami Pet.png">
         </div>
-
-        <div style="display:none;">
-            <img id="beer" src="./game assets/beer.png">
-        </div>
         
-        <!--The Pet's Things-->
+        <!--The Pet's Things 2-->
         
-        <div class="toy-box">
+        <div class="toy-box2">
         <div>
-            <img id="burrito" src="./game assets/burrito.png">
+            <img class="emoji" id="burrito" src="./game assets/burrito.png">
         </div>
         <div>
-            <img id="pill" src="./game assets/pill.png">
+            <img class="emoji" id="pill" src="./game assets/pill.png">
         </div>  
         <div>
-            <img id="guitar" src="./game assets/guitar.png">
+            <img class="emoji" id="guitar" src="./game assets/guitar.png">
         </div> 
         <div>
-            <img id="toothbrush" src="./game assets/toothbrush.png">
+            <img class="emoji" id="toothbrush" src="./game assets/toothbrush.png">
         </div> 
         <div>
-            <img id="soap" src="./game assets/soap.png">
+            <img class="emoji" id="soap" src="./game assets/soap.png">
         </div> 
         <div>
-            <img id="stethoscope" src="./game assets/stethoscope.png">
+            <img class="emoji" id="stethoscope" src="./game assets/stethoscope.png">
         </div> 
         <div>
-            <img id="present" src="./game assets/wrapped-present.png">
+            <img class="emoji" id="present" src="./game assets/wrapped-present.png">
         </div>
         <div>
-            <img id="herb" src="./game assets/herb.png">
+            <img class="emoji" id="herb" src="./game assets/herb.png">
         </div>
     </div>
 

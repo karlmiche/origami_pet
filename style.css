@@ -7,11 +7,13 @@ background: linear-gradient(to right, #FFD194, #D1913C); /* W3C, IE 10+/ Edge, F
 h3 {
     text-align: center;
     font-family: 'Lexend Tera', sans-serif;
+    font-size: 28px;
 }
 
 p {
     text-align: center;
     font-family: monospace;
+    font-size: 15px;
 }
 
 .heading {
@@ -26,29 +28,40 @@ p {
 .status-container {
     font-family: monospace;
     width: 300px;
-    border-top: 1px solid black;
     position: absolute;
+    margin-bottom: 15px;
+}
+
+.emoji {
+    width: 75px;
+    height: auto;
+}
+
+.emoji:hover {
+    opacity: 50%;
+}
+
+.status {
+    border-radius: 10px;
+    width: 270px;
+    height: 30px;
+    margin-left: 10px;;
+    text-align: left;
+    font-family: monospace;
+    color: white;
+    background-color: rgb(58, 161, 58);
 }
 
 .canvas-container {
-    width: 800px;
+    width: 400px;
 }
 
 #canvas {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;    border: 3px solid black;
+    border-top: 3px solid black;
+    border-right: 3px solid black;
+    border-bottom: 3px solid black;
+    border-left: none;
     background-color: cadetblue;
-}
-
-.date {
-    border: 1px solid black;
-    font-family: 'Lexend Tera', sans-serif;
-    background-color: lavender;
-    color: indigo;
 }
 
 #pet-awake {
@@ -56,11 +69,37 @@ p {
     height: auto;
 }
 
-.toy-box {
+.heading-canvas {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;;
+}
+
+.toy-box1 {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(1, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    
     }
+
+.toy-box2 {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    margin-top: 50px;;
+}
+
+.time-display {
+    display: flex;
+    width: 709px;
+    margin: 0 auto;
+    font-size: 35px;
+    border: 1px solid black;
+    font-family: 'Lexend Tera', sans-serif;
+    background-color: lavender;
+    color: indigo;
+}
+
