@@ -62,11 +62,6 @@ localStorage.setItem("thePet", "clean");
   function upDate () {
     const now = new Date();
     document.getElementById("time2").innerHTML = now;
-    lessHappy();
-    lessClean();
-    lessFull();
-    lessFull();
-      //I want this to continually update with the second
   }
   
   setInterval(upDate,
@@ -76,21 +71,31 @@ localStorage.setItem("thePet", "clean");
   //this is working
   console.log(m);
 
+  setInterval(lessHappy, 60000);
+  setInterval(lessFull, 60000);
+  setInterval(lessClean, 60000);
+  setInterval(lessHealth, 60000);
+
 /*********** Decrementing intervals for needs*******/
+//THIS WILL NOT WORK WITHOUT LOCAL STORAGE
+
 function lessHappy () {
     //if it is a 10 minute time
     let m = now.getMinutes();
-    if(m === 0 || m === 10 || m === 20 || m === 30 || m === 40 || m === 50){
-    //decrement happiness by 10
-        thePet.happiness - 10;
-        console.log("🩰", thePet.happiness);
+    if(m === 00 || m === 10 || m === 20 || m === 30 || m === 40 || m === 50){
+        //decrement happiness by 10
+        //iterators are weird like this
+        //need to name what happens
+        if(thePet.happiness > 0){
+            thePet.happiness = thePet.happiness - 10;
+            console.log("🩰", thePet.happiness);
         }
     }
-
-
+}
 
 function lessFull () {
     //if it is a 15 minute time
+    let m = now.getMinutes();
     if(m === 5 || m === 15 || m === 25 || m === 35 || m === 45 || m === 55){
             //decrement hunger by 15
         thePet.hunger - 15;
@@ -98,19 +103,17 @@ function lessFull () {
     }
 }
 
-lessFull();
-
 function lessClean () {
     //if it is past a certain time
+    let m = now.getMinutes();
     if(m === 00 || m === 30){
         thePet.clean - 30;
         console.log(thePet.clean);
     }
 }
 
-lessClean();
-
 function lessHealth () {
+    let m = now.getMinutes();
     if(m === 00 || m === 20 || m === 40){
         thePet.health - 20;
         console.log(thePet.health);
@@ -118,7 +121,6 @@ function lessHealth () {
     //every 20 min decrement health by 20
 }
 
-lessHealth();
 /**********Click Events for Specific Objects*************/
 function moreHappy () {
     //click event on present, guitar, mascHat, femmeHat, crystal
