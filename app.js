@@ -1,8 +1,10 @@
-//intialize some variables 
+//intialize some variables
+const loaded = document.addEventListener("DOMContentLoaded", init);
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const beer = document.getElementById("beer");
 const petAwake = document.getElementById("pet-awake");
+const petAsleep = document.getElementById("pet-asleep");
 const burrito = document.getElementById("burrito");
 const pill = document.getElementById("pill");
 const crystal = document.getElementById("crystal"); 
@@ -25,17 +27,6 @@ const healthy = document.getElementById("healthy");
 const clean = document.getElementById("clean");
 const message = document.getElementById("message");
 
-/*****Initalize thePet**************/
-let thePet = {
-    health: 100,
-    hunger: 100,
-    happiness: 100,
-    clean: 100,
-    awake: true
-}
-
-console.log(thePet);
-
 //canvas details
 canvas.width = 400;
 canvas.height = 400;
@@ -48,34 +39,39 @@ window.onload = function() {
 
 ctx.font = "14px monospace";
 
-//********Local Storage Information**************/
-// localStorage.setItem("thePet", "health");
-// localStorage.setItem("thePet", "hunger");
-// localStorage.setItem("thePet", "happiness");
-// localStorage.setItem("thePet", "clean");
-// var getMyPet = localStorage.getItem("key");
-
+//********Local Storage Information**************
 //check to see, if the pet is in local storage, use the saved local storage values
 //if not, use the initialized values
-//need a conditional for this
-//this can live in a function, but 
+//every time storePet() is assigned, creating a pet whether there is one in local storage or not
+//construct thePet object in local storage
+//need to make it a string
+localStorage.setItem("thePet", JSON.stringify(
+   thePet = {
+    health: 100,
+    hunger: 100,
+    happiness: 100,
+    clean: 100,
+    awake: true
+    }
+))
 
-function checkPet () {}
-const savePet = function storePet() {
-    localStorage.setItem("getMyPetHappy", thePet.happiness);
-    localStorage.setItem("getMyPetHungry", thePet.hunger)
-    localStorage.setItem("getMyPetHealthy", thePet.health)
-    localStorage.setItem("getMyPetClean", thePet.clean)
+//the scenario where somebody has a pet already in local storage
+//if this exists, get the information
+//focus on local storage to do this check
+if(JSON.parse(localStorage.getItem('thePet'))){
+    thePet = JSON.parse(localStorage.getItem('thePet'))
+    //for debugging 
+    console.log("😱", JSON.parse(localStorage.getItem('thePet')));
+}else{
+    thePet = {
+        health: 100,
+        hunger: 100,
+        happiness: 100,
+        clean: 100,
+        awake: true
+    }
 }
 
-const getPet = function getMyPet() {
-    localStorage.getItem("getMyPetHappy");
-    localStorage.getItem("getMyPetHungry");
-    localStorage.getItem("getMyPetHealthy");
-    localStorage.getItem("getMyPetClean");
-}
-
-setInterval(getPet, 1000);
 
 /************dateObject functions**********/
 //this will update the time on the page and internally
@@ -89,45 +85,42 @@ function upDate () {
 
 setInterval(upDate,
 1000);
-//set m to now.getMinutes()
-let m = now.getMinutes();
-//this is working
-console.log(m);
 
-setInterval(lessHappy, 60000);
-setInterval(lessFull, 60000);
-setInterval(lessClean, 60000);
-setInterval(lessHealth, 60000);
+
+function init () {
+    setInterval(lessHappy, 60000);
+    setInterval(lessFull, 60000);
+    setInterval(lessClean, 60000);
+    setInterval(lessHealth, 60000);
+}
+
 
 /*********** Decrementing intervals for needs*******/
-//THIS WILL NOT WORK WITHOUT LOCAL STORAGE
-
 function lessHappy () {
     //if it is a 10 minute time
+    //this fuckiN works
     let m = now.getMinutes();
-    if(m === 0 || m === 10 || m === 20 || m === 30 || m === 40 || m === 50){
+    if(m == 0 || m == 10 || m == 20 || m == 30 || m == 40 || m == 50){
         //decrement happiness by 10
-        //iterators are weird like this
-        //need to name what happens
-        if(thePet.happiness > 0){
+        console.log("olives")
+        if(thePet.happiness > 10){
             thePet.happiness = thePet.happiness - 10;
             console.log("🩰", thePet.happiness);
             happy.innerText = thePet.happiness;
-            message.innerText = "The Pet is losing Happiness... What will you do?";
+            message.innerText = "Pet is unhappy... What will you do?";
         }
     }
 }
 
 function lessFull () {
-    //if it is a 15 minute time
     let m = now.getMinutes();
     if(m === 5 || m === 15 || m === 25 || m === 35 || m === 45 || m === 55){
             //decrement hunger by 15 IF there is hunger to decrement
-        if(thePet.hunger > 0){
+        if(85 > thePet.hunger > 10){
             thePet.hunger = thePet.hunger - 15;
             console.log("💛",thePet.hunger);
             hungry.innerText = thePet.hunger;
-            message.innerText = "The Pet looks very hungry!";
+            message.innerText = "Pet looks very hungry!";
         }
     }
 }
@@ -136,11 +129,11 @@ function lessClean () {
     //if it is past a 30 min time
     let m = now.getMinutes();
     if(m === 0 || m === 30){
-        if(thePet.clean > 0){
+        if(70 > thePet.clean > 10){
             thePet.clean = thePet.clean - 30;
             console.log("☣️", thePet.clean);
             clean.innerText = thePet.clean;
-            message.innerText = "The Pet is starting to smell bad..."
+            message.innerText = "Pet is starting to smell bad..."
         }       
     }
 }
@@ -148,11 +141,11 @@ function lessClean () {
 function lessHealth () {
     let m = now.getMinutes();
     if(m === 0 || m === 20 || m === 40){
-        if(thePet.health > 0){
+        if(80 > thePet.health > 20){
         thePet.health - 20;
         console.log(thePet.health);
         healthy.innerText = thePet.health;
-        message.innerText = "The Pet looks unwell! :(";
+        message.innerText = "Pet looks unwell!";
         }
     }
 }
@@ -169,20 +162,26 @@ function moreHappy () {
 function moreFull () {
     //click event on bubbleTea, peanuts, cannedFood, taco,
     //burrito
-    //increment hunger by 5
+    //increment hunger by +5
 }
 
 function moreClean () {
     //click event on toothbrush, soap
-    //increment clean by 5
+    //increment clean by +5
 }
 
 function moreHealth () {
     //click event on stethoscope, herb, water, pill
-    //increment health by 5
+    //increment health by +5
 }
 
 /************Hibernation Function***********/
+function petHibernate () {
+    if(thePet.happiness === 10 && thePet.health === 10 && thePet.hunger === 10 && thePet.clean === 10){
+        message.innerText = "You did not care for the pet. He is hibernating!";
+        ctx.drawImage(petAsleep, 50, 90);
+    }
+}
 
 /**************JavaScript Animations***************/
 
