@@ -1,5 +1,4 @@
 //intialize some variables
-const loaded = document.addEventListener("DOMContentLoaded", init);
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const beer = document.getElementById("beer");
@@ -40,38 +39,40 @@ window.onload = function() {
 ctx.font = "14px monospace";
 
 //********Local Storage Information**************
-//check to see, if the pet is in local storage, use the saved local storage values
-//if not, use the initialized values
-//every time storePet() is assigned, creating a pet whether there is one in local storage or not
-//construct thePet object in local storage
-//need to make it a string
-localStorage.setItem("thePet", JSON.stringify(
-   thePet = {
-    health: 100,
-    hunger: 100,
-    happiness: 100,
-    clean: 100,
-    awake: true
-    }
-))
 
-//the scenario where somebody has a pet already in local storage
-//if this exists, get the information
-//focus on local storage to do this check
-if(JSON.parse(localStorage.getItem('thePet'))){
-    thePet = JSON.parse(localStorage.getItem('thePet'))
-    //for debugging 
-    console.log("😱", JSON.parse(localStorage.getItem('thePet')));
+var thePet = localStorage.getItem("thePet");
+if(thePet){
+    console.log("there is a pet :-)")
+    thePet = JSON.parse(thePet);
+    //we will want to change local pet to the parsed version of pet
 }else{
-    thePet = {
-        health: 100,
-        hunger: 100,
-        happiness: 100,
-        clean: 100,
-        awake: true
+    let initialPet = {
+        health: Date.now(),
+        hunger: Date.now(),
+        happiness: Date.now(),
+        clean: Date.now(),
+        awoke: 
+        sleep: 
+        //if the time is after 11pm your time, initial pet:awake = false 
     }
-}
 
+    console.log("there is no pet :(");
+    localStorage.setItem("thePet", JSON.stringify(initialPet));
+    thePet = initialPet;
+}
+//check to see, if the pet is in local storage, use the saved local storage values
+//if this exists, get the information
+// if(JSON.stringify(localStorage.getItem(thePet))){
+//     thePet = JSON.parse(localStorage.getItem('thePet'))
+//     //for debugging 
+//     console.log("😱", JSON.parse(localStorage.getItem('thePet')));
+//     setInterval(lessHappy, 20000);
+//     setInterval(lessFull, 60000);
+//     setInterval(lessClean, 60000);
+//     setInterval(lessHealth, 60000);
+// }else{
+//     localStorage.setItem(thePet, JSON.parse("thePet"))
+// }
 
 /************dateObject functions**********/
 //this will update the time on the page and internally
@@ -81,24 +82,28 @@ console.log(now);
 function upDate () {
     const now = new Date();
     document.getElementById("time2").innerHTML = now;
-    }
+    //call checkHappy fka lessHappy
+    //call with the current date as a parameter
+    //can pass in the Date.now
+    //check current time based on thePet.happiness 
+    //then come the conditionals
+    //try console.log "the pet is unhappy"
+    //if it's been more than an hour, display the pet as sleeping
+    //chonky conditionals using Date.now for number comparisons
+    //scale is more than 60 minutes
+}
 
+    //does this update when someone is on?
+    //currrently will only decrement when you're on the page
+    //how do we check the last time a pet was at 
 setInterval(upDate,
 1000);
 
-
-function init () {
-    setInterval(lessHappy, 60000);
-    setInterval(lessFull, 60000);
-    setInterval(lessClean, 60000);
-    setInterval(lessHealth, 60000);
-}
-
-
 /*********** Decrementing intervals for needs*******/
+//functions that determine happiness level based on time difference
 function lessHappy () {
     //if it is a 10 minute time
-    //this fuckiN works
+    //this part fuckiN works
     let m = now.getMinutes();
     if(m == 0 || m == 10 || m == 20 || m == 30 || m == 40 || m == 50){
         //decrement happiness by 10
@@ -177,7 +182,7 @@ function moreHealth () {
 
 /************Hibernation Function***********/
 function petHibernate () {
-    if(thePet.happiness === 10 && thePet.health === 10 && thePet.hunger === 10 && thePet.clean === 10){
+    if(thePet.happiness == 10 && thePet.health == 10 && thePet.hunger == 10 && thePet.clean === 10){
         message.innerText = "You did not care for the pet. He is hibernating!";
         ctx.drawImage(petAsleep, 50, 90);
     }
