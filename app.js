@@ -75,83 +75,110 @@ const currentTime = Date.now();
 function upDate () {
     const now = new Date();
     document.getElementById("time2").innerHTML = now;
-    // checkHappy();
-    //call checkHappy fka lessHappy
-    //call with the current date as a parameter
-    //can pass in the Date.now
-    //check current time based on thePet.happiness 
-    //then come the conditionals
-    //try console.log "the pet is unhappy"
-    //if it's been more than an hour, display the pet as sleeping
-    //chonky conditionals using Date.now for number comparisons
-    //scale is more than 60 minutes
-    checkHappy();
+    // checkHappy(Date.now());
+    // checkHungry(Date.now());
+    // checkHealth(Date.now());
+    // checkClean(Date.now());
 }
 
-
-    //does this update when someone is on?
-    //currrently will only decrement when you're on the page
-    //how do we check the last time a pet was at 
 setInterval(upDate,
 1000);
 
-/*************checkNeeds conditionals****/
-//1 hr is 3600 seconds
-//40 min is 2400 seconds
-//30 min is 1800 seconds
-//20 min is 1200
-
-/********Timestamp Stuff*******/
-
 //Check the needs
 function checkHappy (currentTime){
-   
     //thePet.happiness is that a lengthy number 
-    //is the pet currently happy?
-    //how do you use the info you have to figure out if 
-    //happy or not?
-    //this will update the local storage every second
-    //may need access to this in a different function
-    if(thePet.happiness > currentTime - 600000){
-            let lastHappy = (new Date().getTime())
-            localStorage.setItem("happyKey", lastHappy)
-        }else{  
-            lastHappy = parseInt(localStorage.getItem("happyKey"));
-        }
-    
-    //if the time elapsed from the last time thePet was happy
-    //has been more than 1200 seconds
-    //lastHappy is a timestamp
-    //when lastHappy stops updating, we still need to have access
-    //to the values of lastHappy in localStorage
-    if(lastHappy < currentTime - 1200000){
-        //needs to be measured in time
-        console.log("🩰");
-        happy.style.backgroundColor = "yellow";
-        happy.style.width = "204px";
-        message.innerText = "Pet is unhappy... What will you do?";
-            //display new status bar width and color
-        
-    }else if(lastHappy < currentTime - 1800000){
-        //needs to be measured in time
-        happy.style.backgroundColor = "orange";
-        happy.style.width = "136px";
-        message.innerText = "Pet is looking really, really sad!";
-        //display new status bar width
-    
-    }else if(lastHappy < currentTime - 2400000){
-        happy.style.backgroundColor = "red";
-        happy.style.width = "68px";
-        message.innerText = "Pet is so glum they are hibernating!";
-        petHibernate();
-    }    
-}
+      // number of seconds since pet was happy
+      let lastHappy = Math.round((currentTime - thePet.happiness)/1000)
+      console.log('Seconds since happy', lastHappy);
+      // I reduced the time down to seconds for testing. 
+      // When you want to increase this to minutes or hours
+      // For Example, Hibernating is trigger at 24h mark
+      // if(lastHappy > (60 * 60 * 2)) {...}
+      // 60 (seconds) * 60 (minutes) * 24 (hours)
+      // The hardest to meet condition needs to go first
+      if(lastHappy > 24){
+          happy.style.backgroundColor = "red";
+          happy.style.width = "68px";
+          message.innerText = "Pet is so glum they are hibernating!";
+          petHibernate();
+      }else if(lastHappy > 18){
+          happy.style.backgroundColor = "orange";
+          happy.style.width = "136px";
+          message.innerText = "Pet is looking really, really sad!";
+          //display new status bar width
+      }else if(lastHappy > 12){
+          console.log("🩰");
+          happy.style.backgroundColor = "yellow";
+          happy.style.width = "204px";
+          message.innerText = "Pet is unhappy... What will you do?";
+      }    
+  }
+//   function checkHungry(currentTime){
+//       // number of seconds or since pet was not hungry
+//       let lastHungry = Math.round((currentTime - thePet.hunger)/1000)
+//       console.log(lastHungry);
+//       if(lastHungry > 20){
+//           hungry.style.backgroundColor = "red";
+//           hungry.style.width = "68px";
+//           message.innerText = "Pet is so starved they are hibernating!";
+//           petHibernate();
+//       }else if(lastHungry > 15){
+//           hungry.style.backgroundColor = "orange";
+//           hungry.style.width = "136px";
+//           message.innerText = "Pet is looking very famished!";
+//           //display new status bar width
+//       }else if(lastHungry > 10){
+//           console.log("Pet is hungry :(");
+//           hungry.style.backgroundColor = "yellow";
+//           hungry.style.width = "204px";
+//           message.innerText = "Pet's stomach is growling audibly!";
+//       }    
+//   }
 
-function checkHungry (){}
+//   function checkHealth(currentTime){
+//     // number of seconds since pet was healthy
+//     let lastHealthy = Math.round((currentTime - thePet.health)/1000)
+//     console.log('Seconds since healthy', lastHealthy);
+//     if(lastHealthy > 23){
+//         healthy.style.backgroundColor = "red";
+//         healthy.style.width = "68px";
+//         message.innerText = "Pet is sick and fell into a deep sleep!";
+//         petHibernate();
+//     }else if(lastHealthy > 17){
+//         healthy.style.backgroundColor = "orange";
+//         healthy.style.width = "136px";
+//         message.innerText = "Pet is looking very ill!";
+//         //display new status bar width
+//     }else if(lastHealthy > 11){
+//         console.log("🌊");
+//         healthy.style.backgroundColor = "yellow";
+//         healthy.style.width = "204px";
+//         message.innerText = "Pet looks a little queasy :(";
+//     }    
+// }
 
-function checkHealth () {}
 
-function checkClean (){}
+// function checkClean(currentTime){
+//     // number of seconds since pet was clean
+//     let lastClean = Math.round((currentTime - thePet.clean)/1000)
+//     console.log('Seconds since clean', lastClean);
+//     if(lastClean > 25){
+//         clean.style.backgroundColor = "red";
+//         clean.style.width = "68px";
+//         message.innerText = "Pet is so filthy they're hibernating!";
+//         petHibernate();
+//     }else if(lastClean > 20){
+//         clean.style.backgroundColor = "orange";
+//         clean.style.width = "136px";
+//         message.innerText = "Pet smells BAD!";
+//         //display new status bar width
+//     }else if(lastClean > 5){
+//         console.log("🐞");
+//         clean.style.backgroundColor = "yellow";
+//         clean.style.width = "204px";
+//         message.innerText = "Pet is a little smelly 🤢";
+//     }    
+// }
 
 /************Hibernation Function***********/
 function petHibernate () {
@@ -165,99 +192,21 @@ function petHibernate () {
 
 
 // /**********Click Events for Specific Objects*************/
-// //these events will increment the values 
-// //the value must not exceed 100
-// //the value cannot be less than 0
-// function moreHappy () {
-//     //click event on present, guitar, mascHat, femmeHat, crystal
-//     //increment happiness by +5
-// }
 
-// function moreFull () {
-//     //click event on bubbleTea, peanuts, cannedFood, taco,
-//     //burrito
-//     //increment hunger by +5
-// }
-
-// function moreClean () {
-//     //click event on toothbrush, soap
-//     //increment clean by +5
-// }
-
-// function moreHealth () {
-//     //click event on stethoscope, herb, water, pill
-//     //increment health by +5
 
 /****************Archive Box*****************/
-/*********** Decrementing intervals for needs*******/
-// functions that determine happiness level based on time difference
-// function lessHappy () {
-//     //if it is a 10 minute time
-//     //this part fuckiN works
-//     let m = now.getMinutes();
-//     if(m == 0 || m == 10 || m == 20 || m == 30 || m == 40 || m == 50){
-//         //decrement happiness by 10
-//         console.log("olives")
-//         if(thePet.happiness > 10){
-//             thePet.happiness = thePet.happiness - 10;
-//             console.log("🩰", thePet.happiness);
-//             happy.innerText = thePet.happiness;
-//             message.innerText = "Pet is unhappy... What will you do?";
-//         }
-//     }
-// }
+//Some various notes
 
-// function lessFull () {
-//     let m = now.getMinutes();
-//     if(m === 5 || m === 15 || m === 25 || m === 35 || m === 45 || m === 55){
-//             //decrement hunger by 15 IF there is hunger to decrement
-//         if(85 > thePet.hunger > 10){
-//             thePet.hunger = thePet.hunger - 15;
-//             console.log("💛",thePet.hunger);
-//             hungry.innerText = thePet.hunger;
-//             message.innerText = "Pet looks very hungry!";
-//         }
-//     }
-// }
-
-// function lessClean () {
-//     //if it is past a 30 min time
-//     let m = now.getMinutes();
-//     if(m === 0 || m === 30){
-//         if(70 > thePet.clean > 10){
-//             thePet.clean = thePet.clean - 30;
-//             console.log("☣️", thePet.clean);
-//             clean.innerText = thePet.clean;
-//             message.innerText = "Pet is starting to smell bad..."
-//         }       
-//     }
-// }
-
-// function lessHealth () {
-//     let m = now.getMinutes();
-//     if(m === 0 || m === 20 || m === 40){
-//         if(80 > thePet.health > 20){
-//         thePet.health - 20;
-//         console.log(thePet.health);
-//         healthy.innerText = thePet.health;
-//         message.innerText = "Pet looks unwell!";
-//         }
-//     }
-// }
-
-
-/********Some Old DateObject things************/
-//check to see, if the pet is in local storage, use the saved local storage values
-//if this exists, get the information
-// if(JSON.stringify(localStorage.getItem(thePet))){
-//     thePet = JSON.parse(localStorage.getItem('thePet'))
-//     //for debugging 
-//     console.log("😱", JSON.parse(localStorage.getItem('thePet')));
-//     setInterval(lessHappy, 20000);
-//     setInterval(lessFull, 60000);
-//     setInterval(lessClean, 60000);
-//     setInterval(lessHealth, 60000);
-// }else{
-//     localStorage.setItem(thePet, JSON.parse("thePet"))
-//  } 
-//
+    // checkHappy();
+    //call checkHappy fka lessHappy
+    //call with the current date as a parameter
+    //can pass in the Date.now
+    //check current time based on thePet.happiness 
+    //then come the conditionals
+    //try console.log "the pet is unhappy"
+    //if it's been more than an hour, display the pet as sleeping
+    //chonky conditionals using Date.now for number comparisons
+    //scale is more than 60 minutes
+    //does this update when someone is on?
+    //currrently will only decrement when you're on the page
+    //how do we check the last time a pet was at 
