@@ -50,6 +50,7 @@ if(thePet){
     //we will want to change local pet to the parsed version of pet
 }else{
     let initialPet = {
+        //I don't understand this part
         health: Date.now(),
         hunger: Date.now(),
         happiness: Date.now(),
@@ -69,12 +70,12 @@ if(thePet){
 //basing conditionals off of the CURRENT TIME
 const now = new Date();
 console.log(now);
-
+const currentTime = Date.now();
 
 function upDate () {
     const now = new Date();
     document.getElementById("time2").innerHTML = now;
-    var currentTime = Date.now();
+    // checkHappy();
     //call checkHappy fka lessHappy
     //call with the current date as a parameter
     //can pass in the Date.now
@@ -99,42 +100,48 @@ setInterval(upDate,
 //30 min is 1800 seconds
 //20 min is 1200
 
-/********Timestamp Shit*******/
-
+/********Timestamp Stuff*******/
 
 //Check the needs
-function checkHappy (time){
-
-    if(thePet.happiness <= 60){
-        localStorage.setItem("lastRecordedHappy", JSON.stringify(lastHappy)); 
-        const lastHappy = localStorage.getItem("lastRecordedHappy");
+function checkHappy (currentTime){
+   
+    //thePet.happiness is that a lengthy number 
+    //measured in milliseconds
+    //is the pet currently happy?
+    //how do you use the info you have to figure out if 
+    //happy or not?
+    //this will update the local storage every second
+    //may need access to this in a different function
+   if(thePet.happiness > currentTime - 600000){
+        let lastHappy = (new Date().getTime())
+        localStorage.setItem("happyKey", lastHappy)
+    }else{  
+        lastHappy = parseInt(localStorage.getItem("happyKey"));
     }
+    
     //if the time elapsed from the last time thePet was happy
     //has been more than 1200 seconds
     //lastHappy is a timestamp
-    if(lastHappy = time - 1200){
-        if(thePet.happiness > 10){
-            thePet.happiness = thePet.happiness - 10;
-            console.log("🩰", thePet.happiness);
-            happy.innerText = thePet.happiness;
-            message.innerText = "Pet is unhappy... What will you do?";
+    //when lastHappy stops updating, we still need to have access
+    //to the values of lastHappy in localStorage
+    if(lastHappy < currentTime - 1200000){
+        //needs to be measured in time
+        console.log("🩰");
+        happy.style.backgroundColor = "yellow";
+        message.innerText = "Pet is unhappy... What will you do?";
             //display new status bar width and color
-        }
-    }else if(lastHappy = time - 1800){
-        if(thePet.happiness > 10){
-            thePet.happiness = thePet.happiness - 10;
-            happy.innerText = thePet.happiness;
-            message.innerText = "Pet is looking really, really sad!";
-            //display new status bar width
-        }
-    }else if(lastHappy = time - 2400){
-        if(thePet.happiness > 10){
-            thePet.happiness = thePet.happiness - 10;
-            happy.innerText = thePet.happiness;
-            message.innerText = "Pet is so glum they are hibernating!";
-            petHibernate();
-            //display shortest status bar width and red color
-        }
+        
+    }else if(lastHappy < currentTime - 1800000){
+        //needs to be measured in time
+        happy.style.backgroundColor = "orange";
+        message.innerText = "Pet is looking really, really sad!";
+        //display new status bar width
+    
+    }else if(lastHappy < currentTime - 2400000){
+        happy.style.backgroundColor = "orange";
+        message.innerText = "Pet is so glum they are hibernating!";
+        petHibernate();
+        //display shortest status bar width and red color       
     }    
 }
 
