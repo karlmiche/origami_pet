@@ -114,3 +114,16 @@ span {
     color: indigo;
 }
 
+.storepet {
+    width: 140px;
+    height: 35px;
+    border-radius: 10px;
+    font-family: monospace;
+    background-color: lightblue;
+    color: black;
+}
+
+.new {
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
