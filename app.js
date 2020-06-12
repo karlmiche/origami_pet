@@ -96,10 +96,11 @@ setInterval(upDate,
 1000);
 
 /************Big Comparison Functionality**************/
+//We can do various things and affect different properties 
 const secondsSince = function(currentTime, attribute) {
     // Do relevant DOM manipulation
     return Math.round((currentTime - thePet[attribute])/1000)
-  }
+}
   let sinceHappy = secondsSince(Date.now(), 'happiness')
   let sinceHunger = secondsSince(Date.now(), 'hunger')
   let sinceHealth = secondsSince(Date.now(), 'health')
@@ -108,56 +109,67 @@ const secondsSince = function(currentTime, attribute) {
   if (totalHappScore > (60 * 60 * 24)) {
     message.innerText = "You have not taken good care of Pet. They are hibernating!";
     petHibernate();
+  }else if(totalHappScore < (60 * 60 * 24)){
+    ctx.drawImage(petAwake, 50, 90);
+    console.log("Pet is doing fairly well!");
   }
 
 //Check the needs - Credit to Sarah King for this specific block of code
 //in checkHappy
-function checkHappy (currentTime){
+function checkHappy (){
     //thePet.happiness is that a lengthy number 
       // number of seconds since pet was happy
-      let lastHappy = Math.floor((currentTime - thePet.happiness)/1000)
+    //   let sinceHappy = Math.floor((currentTime - thePet.happiness)/1000)
       // The hardest to meet condition needs to go first
       //this is working, it's just been many seconds since 
       //my pet was created
-      if(lastHappy > 60 * 60 * 24){
+      if(sinceHappy > 60 * 60 * 24){
           happy.style.backgroundColor = "red";
           happy.style.width = "68px";
           message.innerText = "Pet is so glum they are hibernating!";
           petHibernate();
-      }else if(lastHappy > 60 * 60 * 3){
+      }else if(sinceHappy > 60 * 60 * 3){
           happy.style.backgroundColor = "orange";
           happy.style.width = "136px";
           message.innerText = "Pet is looking really, really sad!";
           //display new status bar width
-      }else if(lastHappy > 60 * 60 * 1){
+      }else if(sinceHappy > 60 * 60 * 1){
           happy.style.backgroundColor = "yellow";
           happy.style.width = "204px";
           message.innerText = "Pet is unhappy... What will you do?";
-      }    
-  }
-
-  function checkHungry(currentTime){
+      }else{
+        clean.style.backgroundColor = "rgb(58, 161, 58)";
+        clean.style.width = "272px";
+        ctx.drawImage(petAwake, 50, 90);
+    }    
+}
+  //using this for debugging now
+  //want to incorporate 
+function checkHungry(){
       // number of seconds or since pet was not hungry
-      let lastHungry = Math.round((currentTime - thePet.hunger)/1000)
-      if(lastHungry > 60 * 40){
+      if(sinceHunger > 60 * 40){
           hungry.style.backgroundColor = "red";
           hungry.style.width = "68px";
           message.innerText = "Pet is so starved they are hibernating!";
           petHibernate();
-      }else if(lastHungry > 60 * 30){
+      }else if(sinceHunger > 60 * 30){
           hungry.style.backgroundColor = "orange";
           hungry.style.width = "136px";
           message.innerText = "Pet is looking very famished!";
           //display new status bar width
-      }else if(lastHungry > 60 * 20){
+      }else if(sinceHunger > 60 * 20){
           console.log("Pet is hungry :(");
           hungry.style.backgroundColor = "yellow";
           hungry.style.width = "204px";
           message.innerText = "Pet's stomach is growling audibly!";
-      }    
-  }
+      }else{
+          hungry.style.backgroundColor = "rgb(58, 161, 58)";
+          hungry.style.width = "272px";
+          ctx.drawImage(petAwake, 50, 90);
+      }
+}
 
-  function checkHealth(currentTime){
+function checkHealth(){
     // number of seconds since pet was healthy
     let lastHealthy = Math.round((currentTime - thePet.health)/1000)
     if(lastHealthy > 60 * 60){
@@ -174,11 +186,15 @@ function checkHappy (currentTime){
         healthy.style.backgroundColor = "yellow";
         healthy.style.width = "204px";
         message.innerText = "Pet looks a little queasy :(";
+    }else{
+        healthy.style.backgroundColor = "rgb(58, 161, 58)";
+        healthy.style.width = "272px";
+        ctx.drawImage(petAwake, 50, 90);
     }    
 }
 
 
-function checkClean(currentTime){
+function checkClean(){
     // number of seconds since pet was clean
     let lastClean = Math.round((currentTime - thePet.clean)/1000)
     if(lastClean > 60 * 60){
@@ -195,20 +211,64 @@ function checkClean(currentTime){
         clean.style.backgroundColor = "yellow";
         clean.style.width = "204px";
         message.innerText = "Pet is a little smelly 🤢";
+    }else{
+        clean.style.backgroundColor = "rgb(58, 161, 58)";
+        clean.style.width = "272px";
+        ctx.drawImage(petAwake, 50, 90);
     }    
 }
 
 /**********Click Events for Specific Objects*************/
-cannedFood.addEventListener("click", moreFull());
-burrito.addEventListener("click", moreFull());
-peanuts.addEventListener("click", moreFull());
-taco.addEventListener("click", moreFull());
+//feeding event listeners
+cannedFood.addEventListener("click", moreFull);
+burrito.addEventListener("click", moreFull);
+peanuts.addEventListener("click", moreFull);
+taco.addEventListener("click", moreFull);
+
+//happiness event listeners
+femmeHat.addEventListener("click", moreHappy);
+mascHat.addEventListener("click", moreHappy);
+present.addEventListener("click", moreHappy);
+bubbleTea.addEventListener("click", moreHappy);
+guitar.addEventListener("click", moreHappy);
+crystal.addEventListener("click", moreHappy);
+
+//health event listeners
+pill.addEventListener("click", moreHealth);
+stethoscope.addEventListener("click", moreHealth);
+herb.addEventListener("click", moreHealth);
+water.addEventListener("click", moreHealth);
+
+//cleaning event listeners
+soap.addEventListener("click", moreClean);
+toothbrush.addEventListener("click", moreClean);
 
 /******Functions to "Buy Time" for specific needs******/
-function moreFull(event){
-    sinceHunger + 600000;
-    console.log("you fed the Pet!");
+//function to feed the pet
+function moreFull(){
+    totalHappScore = totalHappScore - 600;
+    console.log("Pet looks satiated!");
+    // checkHungry();
 }
+
+function moreHappy(){
+    console.log("Pet enjoys this gift!");
+    totalHappScore = totalHappScore - 400;
+    // checkHappy();
+}
+
+function moreHealth(){
+    console.log("Pet looks a little healthier!")
+    totalHappScore = totalHappScore - 300;
+    // checkHealth();
+}
+
+function moreClean(){
+    console.log("Pet looks cleaner!")
+    totalHappScore = totalHappScore - 500;
+    // checkClean();
+}
+
 /************Hibernation Function***********/
 function petHibernate () {
         message.innerText = "You did not care for the pet. He is hibernating!";
