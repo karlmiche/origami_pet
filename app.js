@@ -85,6 +85,7 @@ function upDate () {
     //if it's been more than an hour, display the pet as sleeping
     //chonky conditionals using Date.now for number comparisons
     //scale is more than 60 minutes
+    checkHappy();
 }
 
 
@@ -106,18 +107,17 @@ setInterval(upDate,
 function checkHappy (currentTime){
    
     //thePet.happiness is that a lengthy number 
-    //measured in milliseconds
     //is the pet currently happy?
     //how do you use the info you have to figure out if 
     //happy or not?
     //this will update the local storage every second
     //may need access to this in a different function
-   if(thePet.happiness > currentTime - 600000){
-        let lastHappy = (new Date().getTime())
-        localStorage.setItem("happyKey", lastHappy)
-    }else{  
-        lastHappy = parseInt(localStorage.getItem("happyKey"));
-    }
+    if(thePet.happiness > currentTime - 600000){
+            let lastHappy = (new Date().getTime())
+            localStorage.setItem("happyKey", lastHappy)
+        }else{  
+            lastHappy = parseInt(localStorage.getItem("happyKey"));
+        }
     
     //if the time elapsed from the last time thePet was happy
     //has been more than 1200 seconds
@@ -128,20 +128,22 @@ function checkHappy (currentTime){
         //needs to be measured in time
         console.log("🩰");
         happy.style.backgroundColor = "yellow";
+        happy.style.width = "204px";
         message.innerText = "Pet is unhappy... What will you do?";
             //display new status bar width and color
         
     }else if(lastHappy < currentTime - 1800000){
         //needs to be measured in time
         happy.style.backgroundColor = "orange";
+        happy.style.width = "136px";
         message.innerText = "Pet is looking really, really sad!";
         //display new status bar width
     
     }else if(lastHappy < currentTime - 2400000){
-        happy.style.backgroundColor = "orange";
+        happy.style.backgroundColor = "red";
+        happy.style.width = "68px";
         message.innerText = "Pet is so glum they are hibernating!";
         petHibernate();
-        //display shortest status bar width and red color       
     }    
 }
 
