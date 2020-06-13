@@ -170,7 +170,6 @@ function checkHungry(){
       }else{
           hungry.style.backgroundColor = "rgb(58, 161, 58)";
           hungry.style.width = "272px";
-          message.innerText = "Pet is looking at you intently..."
           ctx.drawImage(petAwake, 50, 90);
       }
 }
@@ -225,29 +224,25 @@ function checkClean(){
 }
 
 /**********Click Events for Specific Objects*************/
-//feeding event listeners
-cannedFood.addEventListener("click", canFood);
-burrito.addEventListener("click", burritoMe);
-peanuts.addEventListener("click", peaNut);
-taco.addEventListener("click", tacoMe);
+//make an array of the things and and their functionality
+//like the win condition for loop in tic tac toe
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
+bitchBird(peanuts, peaNut);
 
-//happiness event listeners
-femmeHat.addEventListener("click", cuteHat);
-mascHat.addEventListener("click", topHat);
-present.addEventListener("click", presentMe);
-bubbleTea.addEventListener("click", boBa);
-guitar.addEventListener("click", playGuitar);
-crystal.addEventListener("click", crystalMe);
-
-//health event listeners
-pill.addEventListener("click", pillMe);
-stethoscope.addEventListener("click", stethoScope);
-herb.addEventListener("click", herbMe);
-water.addEventListener("click", waterMe);
-
-//cleaning event listeners
-soap.addEventListener("click", soapMe);
-toothbrush.addEventListener("click", brushTeeth);
 
 /******Functions to "Buy Time" for specific needs******/
 //functions to feed the pet
@@ -264,6 +259,7 @@ function burritoMe(){
 //for peanuts and debugging
 function peaNut(){
     sinceHunger = sinceHunger - 20000;
+    console.log("oh no");
     message.innerText = "Pet doesn't love Peanuts.";
 }
 
@@ -344,36 +340,42 @@ function brushTeeth(){
 /*******Draggability???******/
 
 //for peanuts and debugging purposes
-peanuts.onmousedown = function(event) {
-    let shiftX = event.clientX - peanuts.getBoundingClientRect().left;
-    let shiftY = event.clientY - peanuts.getBoundingClientRect().top;
 
-    peanuts.style.position = "absolute";
-    peanuts.style.zIndex = 3000;
-    document.body.append(peanuts);
-    
-    moveAt(event.pageX, event.pageY);
-    
-    function moveAt(pageX, pageY){
-        peanuts.style.left = pageX - shiftX + "px";
-        peanuts.style.top = pageY - shiftY + "px";
-    }
+function bitchBird (item, needFunction){
+    item.onmousedown = function(event) {
+        let shiftX = event.clientX - item.getBoundingClientRect().left;
+        let shiftY = event.clientY - item.getBoundingClientRect().top;
 
-    function onMouseMove(event) {
+        item.style.position = "absolute";
+        item.style.zIndex = 3000;
+        document.body.append(item);
+        
         moveAt(event.pageX, event.pageY);
+        
+        function moveAt(pageX, pageY){
+            item.style.left = pageX - shiftX + "px";
+            item.style.top = pageY - shiftY + "px";
+        }
+
+        function onMouseMove(event) {
+            moveAt(event.pageX, event.pageY);
+        }
+
+        document.addEventListener("mousemove", onMouseMove);
+
+        item.onmouseup = function () {
+            document.removeEventListener("mousemove", onMouseMove);
+            item.onmouseup = needFunction();
+            console.log("😪")
+        }
     }
 
-    document.addEventListener("mousemove", onMouseMove);
-
-    peanuts.onmouseup = function () {
-        document.removeEventListener("mousemove", onMouseMove);
-        peanuts.onmouseup = null;
+    item.ondragstart = function() {
+        return false;
     }
 }
 
-peanuts.ondragstart = function() {
-    return false;
-}
+bitchBird(peanuts, peaNut);
 /************Hibernation Function***********/
 function petHibernate () {
         ctx.drawImage(petAsleep, 50, 90);
@@ -398,3 +400,26 @@ function petHibernate () {
     //does this update when someone is on?
     //currrently will only decrement when you're on the page
     //how do we check the last time a pet was at 
+
+    //feeding event listeners
+// cannedFood.addEventListener("click", canFood);
+// burrito.addEventListener("click", burritoMe);
+// taco.addEventListener("click", tacoMe);
+
+// //happiness event listeners
+// femmeHat.addEventListener("click", cuteHat);
+// mascHat.addEventListener("click", topHat);
+// present.addEventListener("click", presentMe);
+// bubbleTea.addEventListener("click", boBa);
+// guitar.addEventListener("click", playGuitar);
+// crystal.addEventListener("click", crystalMe);
+
+// //health event listeners
+// pill.addEventListener("click", pillMe);
+// stethoscope.addEventListener("click", stethoScope);
+// herb.addEventListener("click", herbMe);
+// water.addEventListener("click", waterMe);
+
+// //cleaning event listeners
+// soap.addEventListener("click", soapMe);
+// toothbrush.addEventListener("click", brushTeeth);
