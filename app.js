@@ -61,23 +61,20 @@ if(thePet){
     thePet = initialPet;
 }
 
-// newPet.addEventListener("click", makeNewPet());
-// // savePet.addEventListener("click", saveMyPet());
+//click events to save or reset the pet
+//this also helps for debugging purposes
+newPet.addEventListener("click", makeNewPet);
+savePet.addEventListener("click", saveMyPet);
 
-// function makeNewPet (event) {
-//     localStorage.removeItem("thePet");
-//     location.reload();
-//     console.log("a new pet is born!");
-//     let initialPet = {
-//         health: Date.now(),
-//         hunger: Date.now(),
-//         happiness: Date.now(),
-//         clean: Date.now(),
-//     }
-//     thePet = initialPet;
-//     var thePet = localStorage.getItem("thePet");
-//     location.reload();
-// }
+function makeNewPet () {
+    localStorage.removeItem("thePet");
+    location.reload();
+}
+
+function saveMyPet () {
+    var thePet = localStorage.getItem("thePet");
+    location.reload();
+}
 
 /************dateObject functions**********/
 //basing conditionals off of the CURRENT TIME
@@ -95,12 +92,17 @@ function checkPet () {
     checkHungry(Date.now());
     checkHealth(Date.now());
     checkClean(Date.now());
+    happy.innerText = "Happiness: " + sinceHappy;
+    hungry.innerText = "Hunger: " + sinceHunger;
+    clean.innerText = "Hygiene: " + sinceClean;
+    healthy.innerText = "Health: " + sinceHealth;
 }
 
 setInterval(checkPet,
 1000);
 
 setInterval(changeDate, 1000);
+
 
 /************Big Comparison Functionality**************/
 //We can do various things and affect different properties 
@@ -152,7 +154,6 @@ function checkHungry(){
       if(sinceHunger > 60 * 40){
           hungry.style.backgroundColor = "red";
           hungry.style.width = "68px";
-          message.innerText = "Pet is so starved they are hibernating!";
           petHibernate();
           return;
       }else if(sinceHunger > 60 * 30){
@@ -179,7 +180,6 @@ function checkHealth(){
     if(sinceHealth > 60 * 60){
         healthy.style.backgroundColor = "red";
         healthy.style.width = "68px";
-        message.innerText = "Pet is so sick they fell into a deep sleep!";
         petHibernate();
         return;
     }else if(sinceHealth > 60 * 60 * 2){
@@ -205,7 +205,6 @@ function checkClean(){
     if(sinceClean > 60 * 60){
         clean.style.backgroundColor = "red";
         clean.style.width = "68px";
-        message.innerText = "Pet is so filthy they're hibernating!";
         petHibernate();
         return;
     }else if(sinceClean > 60 * 45){
@@ -227,57 +226,162 @@ function checkClean(){
 
 /**********Click Events for Specific Objects*************/
 //feeding event listeners
-cannedFood.addEventListener("click", moreFull);
-burrito.addEventListener("click", moreFull);
-peanuts.addEventListener("click", moreFull);
-taco.addEventListener("click", moreFull);
+cannedFood.addEventListener("click", canFood);
+burrito.addEventListener("click", burritoMe);
+peanuts.addEventListener("click", peaNut);
+taco.addEventListener("click", tacoMe);
 
 //happiness event listeners
-femmeHat.addEventListener("click", moreHappy);
-mascHat.addEventListener("click", moreHappy);
-present.addEventListener("click", moreHappy);
-bubbleTea.addEventListener("click", moreHappy);
-guitar.addEventListener("click", moreHappy);
-crystal.addEventListener("click", moreHappy);
+femmeHat.addEventListener("click", cuteHat);
+mascHat.addEventListener("click", topHat);
+present.addEventListener("click", presentMe);
+bubbleTea.addEventListener("click", boBa);
+guitar.addEventListener("click", playGuitar);
+crystal.addEventListener("click", crystalMe);
 
 //health event listeners
-pill.addEventListener("click", moreHealth);
-stethoscope.addEventListener("click", moreHealth);
-herb.addEventListener("click", moreHealth);
-water.addEventListener("click", moreHealth);
+pill.addEventListener("click", pillMe);
+stethoscope.addEventListener("click", stethoScope);
+herb.addEventListener("click", herbMe);
+water.addEventListener("click", waterMe);
 
 //cleaning event listeners
-soap.addEventListener("click", moreClean);
-toothbrush.addEventListener("click", moreClean);
+soap.addEventListener("click", soapMe);
+toothbrush.addEventListener("click", brushTeeth);
 
 /******Functions to "Buy Time" for specific needs******/
-//function to feed the pet
-function moreFull(){
-    sinceHunger = sinceHunger - 600;
-    console.log("Pet looks satiated!");
+//functions to feed the pet
+function canFood(){
+    sinceHunger = sinceHunger - 60000;
+    message.innerText = "Canned food is delicious AND nutritious!";
 }
 
-function moreHappy(){
-    console.log("Pet enjoys this gift!");
-    sinceHappy = sinceHappy - 400;
+function burritoMe(){
+    sinceHunger = sinceHunger - 120000;
+    message.innerText = "Pet's favorite food is Burrito!";
 }
 
-function moreHealth(){
-    console.log("Pet looks a little healthier!")
-    sinceHealth = sinceHealth - 300;
+//for peanuts and debugging
+function peaNut(){
+    sinceHunger = sinceHunger - 20000;
+    message.innerText = "Pet doesn't love Peanuts.";
 }
 
-function moreClean(){
-    console.log("Pet looks cleaner!")
-    sinceClean = sinceClean - 500;
+
+function tacoMe(){
+    sinceHunger = sinceHunger - 60000;
+    message.innerText = "Pet enjoys Tacos.";
 }
 
+//functions bearing on happiness
+
+function cuteHat(){
+    message.innerText = "Pet feels really cute in this hat!";
+    sinceHappy = sinceHappy - 40000;
+}
+
+function topHat(){
+    message.innerText = "Pet feels very handsome in this hat.";
+    sinceHappy = sinceHappy - 40000;
+}
+
+function presentMe(){
+    message.innerText = "Pet is tearing off the wrapping paper!";
+    sinceHappy = sinceHappy - 50000;
+}
+
+function boBa(){
+    message.innerText = "BOBA!!!";
+    sinceHappy = sinceHappy - 120000;
+}
+
+function playGuitar(){
+    message.innerText = "Pet is pecking at the strings!";
+    sinceHappy = sinceHappy - 20000;
+}
+
+function crystalMe(){
+    message.innerText = "This Crystal is mysterious and shiny.";
+    sinceHappy = sinceHappy - 300000;
+}
+
+//functions bearing on health
+
+function pillMe(){
+    message.innerText = "Great! You gave Pet their vitamins.";
+    sinceHealth = sinceHealth - 130000;
+}
+
+function waterMe(){
+    message.innerText = "Pet was thirsty, but feels better now!";
+    sinceHealth = sinceHealth - 230000;
+}
+
+function herbMe(){
+    message.innerText = "This herb is very relaxing to Pet.";
+    sinceHealth = sinceHealth - 35000;
+}
+
+function stethoScope(){
+    message.innerText = "Pet's vitals look better now!";
+    sinceHealth = sinceHealth - 10000;
+}
+
+
+//functions bearing on hygiene 
+
+function soapMe(){
+    message.innerText = "Pet's feathers are soft and shiny after a wash!";
+    sinceClean = sinceClean - 250000;
+}
+
+function brushTeeth(){
+    message.innerText = "Nothing like a clean beak!";
+    sinceClean = sinceClean - 50000;
+}
+
+
+/*******Draggability???******/
+
+//for peanuts and debugging purposes
+peanuts.onmousedown = function(event) {
+    let shiftX = event.clientX - peanuts.getBoundingClientRect().left;
+    let shiftY = event.clientY - peanuts.getBoundingClientRect().top;
+
+    peanuts.style.position = "absolute";
+    peanuts.style.zIndex = 3000;
+    document.body.append(peanuts);
+    
+    moveAt(event.pageX, event.pageY);
+    
+    function moveAt(pageX, pageY){
+        peanuts.style.left = pageX - shiftX + "px";
+        peanuts.style.top = pageY - shiftY + "px";
+    }
+
+    function onMouseMove(event) {
+        moveAt(event.pageX, event.pageY);
+    }
+
+    document.addEventListener("mousemove", onMouseMove);
+
+    peanuts.onmouseup = function () {
+        document.removeEventListener("mousemove", onMouseMove);
+        peanuts.onmouseup = null;
+    }
+}
+
+peanuts.ondragstart = function() {
+    return false;
+}
 /************Hibernation Function***********/
 function petHibernate () {
-        ctx.drawImage(petAsleep, 50, 90);   
+        ctx.drawImage(petAsleep, 50, 90);
+        message.innerText = "The pet is hibernating for some reason!";
 }
 
 /**************JavaScript Animations***************/
+
 
 /****************Archive Box*****************/
 //Some various notes
