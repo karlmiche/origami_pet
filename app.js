@@ -31,17 +31,12 @@ const newPet = document.getElementById("newpet");
 //canvas details
 canvas.width = 400;
 canvas.height = 400;
-
-
 //the Pet awakens
 window.onload = function() {
     ctx.drawImage(petAwake, 50, 90);
   };
 
-ctx.font = "14px monospace";
-
 //********Local Storage Information**************
-
 var thePet = localStorage.getItem("thePet");
 
 if(thePet){
@@ -55,14 +50,12 @@ if(thePet){
         happiness: Date.now(),
         clean: Date.now(),
     }
-
     console.log("there is no pet :(");
     localStorage.setItem("thePet", JSON.stringify(initialPet));
     thePet = initialPet;
 }
 
 //click events to save or reset the pet
-//this also helps for debugging purposes
 newPet.addEventListener("click", makeNewPet);
 savePet.addEventListener("click", saveMyPet);
 
@@ -72,14 +65,12 @@ function makeNewPet () {
 }
 
 function saveMyPet () {
-    var thePet = localStorage.getItem("thePet");
+    thePet = localStorage.getItem("thePet");
     location.reload();
 }
 
 /************dateObject functions**********/
-//basing conditionals off of the CURRENT TIME
 const now = new Date();
-console.log(now);
 const currentTime = Date.now();
 
 function changeDate(){
@@ -88,10 +79,10 @@ function changeDate(){
 }
 
 function checkPet () {
-    checkHappy(Date.now());
-    checkHungry(Date.now());
-    checkHealth(Date.now());
-    checkClean(Date.now());
+    checkHappy(Date.now);
+    checkHungry(Date.now);
+    checkHealth(Date.now);
+    checkClean(Date.now);
     happy.innerText = "Happiness: " + sinceHappy;
     hungry.innerText = "Hunger: " + sinceHunger;
     clean.innerText = "Hygiene: " + sinceClean;
@@ -103,11 +94,8 @@ setInterval(checkPet,
 
 setInterval(changeDate, 1000);
 
-
 /************Big Comparison Functionality**************/
-//We can do various things and affect different properties 
 const secondsSince = function(currentTime, attribute) {
-    // Do relevant DOM manipulation
     return Math.round((currentTime - thePet[attribute])/1000)
 }
   let sinceHappy = secondsSince(Date.now(), 'happiness')
@@ -116,66 +104,56 @@ const secondsSince = function(currentTime, attribute) {
   let sinceClean = secondsSince(Date.now(), 'clean')
   let totalHappScore = sinceHappy + sinceClean + sinceHealth + sinceHunger
   
-//Check the needs - Credit to Sarah King for this specific block of code
-//in checkHappy
+/**These functions check the pet's needs and update status bars**/
 function checkHappy (){
-    //thePet.happiness is that a lengthy number 
-      // number of seconds since pet was happy
-    //   let sinceHappy = Math.floor((currentTime - thePet.happiness)/1000)
-      // The hardest to meet condition needs to go first
-      //this is working, it's just been many seconds since 
-      //my pet was created
-      if(sinceHappy > 60 * 60 * 24){
-          happy.style.backgroundColor = "red";
-          happy.style.width = "68px";
-          message.innerText = "Pet is so glum they are hibernating!";
-          petHibernate();
-          return;
-      }else if(sinceHappy > 60 * 60){
-          happy.style.backgroundColor = "orange";
-          happy.style.width = "136px";
-          message.innerText = "Pet is looking really, really sad!";
-          return;
-      }else if(sinceHappy > 60 * 60 * 2){
-          happy.style.backgroundColor = "yellow";
-          happy.style.width = "204px";
-          message.innerText = "Pet is unhappy... What will you do?";
-          return;
-      }else{
-        happy.style.backgroundColor = "rgb(58, 161, 58)";
-        happy.style.width = "272px";
-        ctx.drawImage(petAwake, 50, 90);
+    if(sinceHappy > 60 * 60 * 24){
+        happy.style.backgroundColor = "red";
+        happy.style.width = "68px";
+        message.innerText = "Pet is so glum they are hibernating!";
+        petHibernate();
+        return;
+    }else if(sinceHappy > 60 * 60){
+        happy.style.backgroundColor = "orange";
+        happy.style.width = "136px";
+        message.innerText = "Pet is looking really, really sad!";
+        return;
+    }else if(sinceHappy > 60 * 60 * 2){
+        happy.style.backgroundColor = "yellow";
+        happy.style.width = "204px";
+        message.innerText = "Pet is unhappy... What will you do?";
+        return;
+    }else{
+    happy.style.backgroundColor = "rgb(58, 161, 58)";
+    happy.style.width = "272px";
+    ctx.drawImage(petAwake, 50, 90);
     }    
 }
-  //using this for debugging now
-  //want to incorporate 
+ 
 function checkHungry(){
-      // number of seconds or since pet was not hungry
-      if(sinceHunger > 60 * 40){
-          hungry.style.backgroundColor = "red";
-          hungry.style.width = "68px";
-          petHibernate();
-          return;
-      }else if(sinceHunger > 60 * 30){
-          hungry.style.backgroundColor = "orange";
-          hungry.style.width = "136px";
-          message.innerText = "Pet is looking very famished!";
-          return;
-      }else if(sinceHunger > 60 * 20){
-          console.log("Pet is hungry :(");
-          hungry.style.backgroundColor = "yellow";
-          hungry.style.width = "204px";
-          message.innerText = "Pet's stomach is growling audibly!";
-          return;
-      }else{
-          hungry.style.backgroundColor = "rgb(58, 161, 58)";
-          hungry.style.width = "272px";
-          ctx.drawImage(petAwake, 50, 90);
-      }
+    if(sinceHunger > 60 * 40){
+        hungry.style.backgroundColor = "red";
+        hungry.style.width = "68px";
+        petHibernate();
+        return;
+    }else if(sinceHunger > 60 * 30){
+        hungry.style.backgroundColor = "orange";
+        hungry.style.width = "136px";
+        message.innerText = "Pet is looking very famished!";
+        return;
+    }else if(sinceHunger > 60 * 20){
+        console.log("Pet is hungry :(");
+        hungry.style.backgroundColor = "yellow";
+        hungry.style.width = "204px";
+        message.innerText = "Pet's stomach is growling audibly!";
+        return;
+    }else{
+        hungry.style.backgroundColor = "rgb(58, 161, 58)";
+        hungry.style.width = "272px";
+        ctx.drawImage(petAwake, 50, 90);
+    }
 }
 
 function checkHealth(){
-    // number of seconds since pet was healthy
     if(sinceHealth > 60 * 60){
         healthy.style.backgroundColor = "red";
         healthy.style.width = "68px";
@@ -200,7 +178,6 @@ function checkHealth(){
 
 
 function checkClean(){
-    // number of seconds since pet was clean
     if(sinceClean > 60 * 60){
         clean.style.backgroundColor = "red";
         clean.style.width = "68px";
@@ -223,157 +200,98 @@ function checkClean(){
     }    
 }
 
-/**********Drag/Click Events for Specific Objects*************/
-//make an array of the things and and their functionality
-//like the win condition for loop in tic tac toe
-let birdThings = [crystal, bubbleTea, mascHat, femmeHat, water, peanuts, cannedFood, taco, burrito, pill, guitar, toothbrush, soap, stethoscope, present, herb];
-for(let i = 0; i < birdThings.length; i++){
-    
-}
+/****birdNeeds object holds functions for specific game assets****/
+birdNeeds = {
+    canFood: ()=>{
+        sinceHunger = sinceHunger - 60000;
+        message.innerText = "Canned food is delicious AND nutritious!";
+    },
+    burritoMe: ()=>{
+        sinceHunger = sinceHunger - 120000;
+        message.innerText = "Pet's favorite food is Burrito!";
+    },
+    peaNut: ()=>{
+        sinceHunger = sinceHunger - 20000;
+        message.innerText = "Pet doesn't love Peanuts.";
+    },
+    tacoMe: ()=>{
+        sinceHunger = sinceHunger - 60000;
+        message.innerText = "Pet enjoys Tacos.";
+    },
+    cuteHat: ()=>{
+        message.innerText = "Pet feels really cute in this hat!";
+        sinceHappy = sinceHappy - 40000;
+    },
+    topHat: ()=>{
+        message.innerText = "Pet feels very handsome in this hat.";
+        sinceHappy = sinceHappy - 40000;
+    },
+    presentMe: ()=>{
+        message.innerText = "Pet is tearing off the wrapping paper!";
+        sinceHappy = sinceHappy - 50000;
+    },
+    boBa: ()=>{
+        message.innerText = "BOBA!!!";
+        sinceHappy = sinceHappy - 120000;
+    },
+    playGuitar: ()=>{
+        message.innerText = "Pet is pecking at the strings!";
+        sinceHappy = sinceHappy - 20000;
+    },
+    crystalMe: ()=>{
+        message.innerText = "This Crystal is mysterious and shiny.";
+        sinceHappy = sinceHappy - 300000;
+    },
+    pillMe: ()=>{
+        message.innerText = "Great! You gave Pet their vitamins.";
+        sinceHealth = sinceHealth - 130000;
+    },
+    waterMe: ()=>{
+        message.innerText = "Pet was thirsty, but feels better now!";
+        sinceHealth = sinceHealth - 230000;
+    },
+    herbMe: ()=>{
+        message.innerText = "This herb is very relaxing to Pet.";
+        sinceHealth = sinceHealth - 35000;
+    },
+    stethoScope: ()=>{
+        message.innerText = "Pet's vitals look better now!";
+        sinceHealth = sinceHealth - 10000;
+    },
+    soapMe: ()=>{
+        message.innerText = "Pet's feathers are soft and shiny after a wash!";
+        sinceClean = sinceClean - 250000;
+    },
+    brushTeeth: ()=>{
+        message.innerText = "Nothing like a clean beak!";
+        sinceClean = sinceClean - 50000;
+    }
+}   
 
-/****ideas to refactor 16 functions into one function instead****/
-//can give each element a specific id
-//can data-id attribute and give it a number or code
-//can make a function with switch statements OR,
-//make an object with all of the things with the millisecond val
-//key is the name and value is the milliseconds taken off
-//OR could put the category and value in the HTML elements
-//have to pull the values out and whatever is clicked on effects hunger
-
-/******Functions to "Buy Time" for specific needs******/
-//needs to be one function versus 16
-//functions to feed the pet
-function canFood(){
-    sinceHunger = sinceHunger - 60000;
-    message.innerText = "Canned food is delicious AND nutritious!";
-}
-
-function burritoMe(){
-    sinceHunger = sinceHunger - 120000;
-    message.innerText = "Pet's favorite food is Burrito!";
-}
-
-//for peanuts and debugging
-function peaNut(){
-    sinceHunger = sinceHunger - 20000;
-    console.log("oh no");
-    message.innerText = "Pet doesn't love Peanuts.";
-}
-
-
-function tacoMe(){
-    sinceHunger = sinceHunger - 60000;
-    message.innerText = "Pet enjoys Tacos.";
-}
-
-//functions bearing on happiness
-
-function cuteHat(){
-    message.innerText = "Pet feels really cute in this hat!";
-    sinceHappy = sinceHappy - 40000;
-}
-
-function topHat(){
-    message.innerText = "Pet feels very handsome in this hat.";
-    sinceHappy = sinceHappy - 40000;
-}
-
-function presentMe(){
-    message.innerText = "Pet is tearing off the wrapping paper!";
-    sinceHappy = sinceHappy - 50000;
-}
-
-function boBa(){
-    message.innerText = "BOBA!!!";
-    sinceHappy = sinceHappy - 120000;
-}
-
-function playGuitar(){
-    message.innerText = "Pet is pecking at the strings!";
-    sinceHappy = sinceHappy - 20000;
-}
-
-function crystalMe(){
-    message.innerText = "This Crystal is mysterious and shiny.";
-    sinceHappy = sinceHappy - 300000;
-}
-
-//functions bearing on health
-function pillMe(){
-    message.innerText = "Great! You gave Pet their vitamins.";
-    sinceHealth = sinceHealth - 130000;
-}
-
-function waterMe(){
-    message.innerText = "Pet was thirsty, but feels better now!";
-    sinceHealth = sinceHealth - 230000;
-}
-
-function herbMe(){
-    message.innerText = "This herb is very relaxing to Pet.";
-    sinceHealth = sinceHealth - 35000;
-}
-
-function stethoScope(){
-    message.innerText = "Pet's vitals look better now!";
-    sinceHealth = sinceHealth - 10000;
-}
-
-//functions bearing on hygiene 
-function soapMe(){
-    message.innerText = "Pet's feathers are soft and shiny after a wash!";
-    sinceClean = sinceClean - 250000;
-}
-
-function brushTeeth(){
-    message.innerText = "Nothing like a clean beak!";
-    sinceClean = sinceClean - 50000;
-}
+//feeding event listeners
+cannedFood.addEventListener("click", birdNeeds.canFood);
+burrito.addEventListener("click", birdNeeds.burritoMe);
+taco.addEventListener("click", birdNeeds.tacoMe);
+peanuts.addEventListener("click", birdNeeds.peaNut);
+//happiness event listeners
+femmeHat.addEventListener("click", birdNeeds.cuteHat);
+mascHat.addEventListener("click", birdNeeds.topHat);
+present.addEventListener("click", birdNeeds.presentMe);
+bubbleTea.addEventListener("click", birdNeeds.boBa);
+guitar.addEventListener("click", birdNeeds.playGuitar);
+crystal.addEventListener("click", birdNeeds.crystalMe);
+//health event listeners
+pill.addEventListener("click", birdNeeds.pillMe);
+stethoscope.addEventListener("click", birdNeeds.stethoScope);
+herb.addEventListener("click", birdNeeds.herbMe);
+water.addEventListener("click", birdNeeds.waterMe);
+//cleaning event listeners
+soap.addEventListener("click", birdNeeds.soapMe);
+toothbrush.addEventListener("click", birdNeeds.brushTeeth);
 
 /************Hibernation Function***********/
 function petHibernate () {
-        ctx.drawImage(petAsleep, 50, 90);
-        message.innerText = "The pet is hibernating for some reason!";
+    ctx.drawImage(petAsleep, 50, 90);
+    message.innerText = "The pet is hibernating for some reason!";
 }
 
-/**************JavaScript Animations***************/
-
-
-/****************Archive Box*****************/
-//Some various notes
-    // checkHappy();
-    //call checkHappy fka lessHappy
-    //call with the current date as a parameter
-    //can pass in the Date.now
-    //check current time based on thePet.happiness 
-    //then come the conditionals
-    //try console.log "the pet is unhappy"
-    //if it's been more than an hour, display the pet as sleeping
-    //chonky conditionals using Date.now for number comparisons
-    //scale is more than 60 minutes
-    //does this update when someone is on?
-    //currrently will only decrement when you're on the page
-    //how do we check the last time a pet was at 
-
-    //feeding event listeners
-cannedFood.addEventListener("click", canFood);
-burrito.addEventListener("click", burritoMe);
-taco.addEventListener("click", tacoMe);
-
-//happiness event listeners
-femmeHat.addEventListener("click", cuteHat);
-mascHat.addEventListener("click", topHat);
-present.addEventListener("click", presentMe);
-bubbleTea.addEventListener("click", boBa);
-guitar.addEventListener("click", playGuitar);
-crystal.addEventListener("click", crystalMe);
-
-//health event listeners
-pill.addEventListener("click", pillMe);
-stethoscope.addEventListener("click", stethoScope);
-herb.addEventListener("click", herbMe);
-water.addEventListener("click", waterMe);
-
-//cleaning event listeners
-soap.addEventListener("click", soapMe);
-toothbrush.addEventListener("click", brushTeeth);
