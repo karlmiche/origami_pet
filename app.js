@@ -223,28 +223,25 @@ function checkClean(){
     }    
 }
 
-/**********Click Events for Specific Objects*************/
+/**********Drag/Click Events for Specific Objects*************/
 //make an array of the things and and their functionality
 //like the win condition for loop in tic tac toe
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
-bitchBird(peanuts, peaNut);
+let birdThings = [crystal, bubbleTea, mascHat, femmeHat, water, peanuts, cannedFood, taco, burrito, pill, guitar, toothbrush, soap, stethoscope, present, herb];
+for(let i = 0; i < birdThings.length; i++){
+    
+}
 
+/****ideas to refactor 16 functions into one function instead****/
+//can give each element a specific id
+//can data-id attribute and give it a number or code
+//can make a function with switch statements OR,
+//make an object with all of the things with the millisecond val
+//key is the name and value is the milliseconds taken off
+//OR could put the category and value in the HTML elements
+//have to pull the values out and whatever is clicked on effects hunger
 
 /******Functions to "Buy Time" for specific needs******/
+//needs to be one function versus 16
 //functions to feed the pet
 function canFood(){
     sinceHunger = sinceHunger - 60000;
@@ -302,7 +299,6 @@ function crystalMe(){
 }
 
 //functions bearing on health
-
 function pillMe(){
     message.innerText = "Great! You gave Pet their vitamins.";
     sinceHealth = sinceHealth - 130000;
@@ -323,9 +319,7 @@ function stethoScope(){
     sinceHealth = sinceHealth - 10000;
 }
 
-
 //functions bearing on hygiene 
-
 function soapMe(){
     message.innerText = "Pet's feathers are soft and shiny after a wash!";
     sinceClean = sinceClean - 250000;
@@ -336,46 +330,6 @@ function brushTeeth(){
     sinceClean = sinceClean - 50000;
 }
 
-
-/*******Draggability???******/
-
-//for peanuts and debugging purposes
-
-function bitchBird (item, needFunction){
-    item.onmousedown = function(event) {
-        let shiftX = event.clientX - item.getBoundingClientRect().left;
-        let shiftY = event.clientY - item.getBoundingClientRect().top;
-
-        item.style.position = "absolute";
-        item.style.zIndex = 3000;
-        document.body.append(item);
-        
-        moveAt(event.pageX, event.pageY);
-        
-        function moveAt(pageX, pageY){
-            item.style.left = pageX - shiftX + "px";
-            item.style.top = pageY - shiftY + "px";
-        }
-
-        function onMouseMove(event) {
-            moveAt(event.pageX, event.pageY);
-        }
-
-        document.addEventListener("mousemove", onMouseMove);
-
-        item.onmouseup = function () {
-            document.removeEventListener("mousemove", onMouseMove);
-            item.onmouseup = needFunction();
-            console.log("😪")
-        }
-    }
-
-    item.ondragstart = function() {
-        return false;
-    }
-}
-
-bitchBird(peanuts, peaNut);
 /************Hibernation Function***********/
 function petHibernate () {
         ctx.drawImage(petAsleep, 50, 90);
@@ -402,24 +356,24 @@ function petHibernate () {
     //how do we check the last time a pet was at 
 
     //feeding event listeners
-// cannedFood.addEventListener("click", canFood);
-// burrito.addEventListener("click", burritoMe);
-// taco.addEventListener("click", tacoMe);
+cannedFood.addEventListener("click", canFood);
+burrito.addEventListener("click", burritoMe);
+taco.addEventListener("click", tacoMe);
 
-// //happiness event listeners
-// femmeHat.addEventListener("click", cuteHat);
-// mascHat.addEventListener("click", topHat);
-// present.addEventListener("click", presentMe);
-// bubbleTea.addEventListener("click", boBa);
-// guitar.addEventListener("click", playGuitar);
-// crystal.addEventListener("click", crystalMe);
+//happiness event listeners
+femmeHat.addEventListener("click", cuteHat);
+mascHat.addEventListener("click", topHat);
+present.addEventListener("click", presentMe);
+bubbleTea.addEventListener("click", boBa);
+guitar.addEventListener("click", playGuitar);
+crystal.addEventListener("click", crystalMe);
 
-// //health event listeners
-// pill.addEventListener("click", pillMe);
-// stethoscope.addEventListener("click", stethoScope);
-// herb.addEventListener("click", herbMe);
-// water.addEventListener("click", waterMe);
+//health event listeners
+pill.addEventListener("click", pillMe);
+stethoscope.addEventListener("click", stethoScope);
+herb.addEventListener("click", herbMe);
+water.addEventListener("click", waterMe);
 
-// //cleaning event listeners
-// soap.addEventListener("click", soapMe);
-// toothbrush.addEventListener("click", brushTeeth);
+//cleaning event listeners
+soap.addEventListener("click", soapMe);
+toothbrush.addEventListener("click", brushTeeth);
