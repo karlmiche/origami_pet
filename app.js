@@ -39,7 +39,6 @@ window.onload = function() {
 
 //********Local Storage Information**************
 let thePet = localStorage.getItem("thePet");
-
 if(thePet){
     console.log("there is a pet :-)")
     thePet = JSON.parse(thePet);
@@ -50,12 +49,27 @@ if(thePet){
         hunger: Date.now(),
         happiness: Date.now(),
         clean: Date.now(),
+        // totalHappScore: Date.now(),
     }
     console.log("there is no pet :(");
     localStorage.setItem("thePet", JSON.stringify(initialPet));
     thePet = initialPet;
 }
 
+// //local storage for totalHappScore
+// //but this didn't solve the bug I was having
+// //wrapping it in a function 
+// //and calling it on click events didn't help either
+// totalHappScore = localStorage.getItem("totalHappScore");
+
+// if(totalHappScore){
+//     console.log("there is a happiness score!");
+//     totalHappScore = JSON.parse(totalHappScore);
+// }else{
+//     let startHappScore = sinceHappy + sinceClean + sinceHealth + sinceHunger
+//     console.log("there is no happiness score!");
+//     localStorage.setItem("totalHappScore", JSON.stringify(startHappScore));
+// }
 
 /************Big Comparison Functionality**************/
 const secondsSince = function(currentTime, attribute) {
@@ -65,20 +79,7 @@ const secondsSince = function(currentTime, attribute) {
   let sinceHunger = secondsSince(Date.now(), 'hunger')
   let sinceHealth = secondsSince(Date.now(), 'health')
   let sinceClean = secondsSince(Date.now(), 'clean')
-  let totalHappScore = sinceHappy + sinceClean + sinceHealth + sinceHunger
-
-//local storage for totalHappScore
-//but this didn't solve the bug I was having
-    totalHappScore = localStorage.getItem("totalHappScore");
-
-if(totalHappScore){
-    console.log("there is a happiness score!");
-    totalHappScore = JSON.parse(totalHappScore);
-}else{
-    let startHappScore = sinceHappy + sinceClean + sinceHealth + sinceHunger
-    console.log("there is no happiness score!");
-    localStorage.setItem("totalHappScore", JSON.stringify(startHappScore));
-}
+  totalHappScore = sinceHappy + sinceClean + sinceHealth + sinceHunger
 
 //click events to save or reset the pet
 newPet.addEventListener("click", makeNewPet);
@@ -91,6 +92,7 @@ function makeNewPet () {
 
 function saveMyPet () {
     //this is going to get the last recorded pet
+    //I don't know if this really "saves" the pet
     thePet = localStorage.getItem("thePet");
     location.reload();
 }
@@ -115,9 +117,7 @@ function checkPet () {
     healthy.innerText = "Health: " + sinceHealth;
 }
 
-setInterval(checkPet,
-1000);
-
+setInterval(checkPet, 1000);
 setInterval(changeDate, 1000);
 
 /***Change background color and pet image at night***/
@@ -126,7 +126,7 @@ setInterval(changeDate, 1000);
       document.body.className = "night-time";
       ctx.drawImage(petAsleep, 50, 90);
       message.style.color = "white";
-      message.style.innerText = "The pet is sleeping, you should be too!"
+      message.innerText = "The pet is sleeping, you should be too!"
       document.getElementById("time2").style.color = "white";
     }
 	else if(h < 21 || h > 6){
@@ -134,8 +134,6 @@ setInterval(changeDate, 1000);
       ctx.drawImage(petAwake, 50, 90);
       message.style.color = "indigo";
     }
-
-
 
 /**These functions check the pet's needs and update status bars**/
 function checkHappy (){
@@ -327,4 +325,3 @@ function petHibernate () {
     ctx.drawImage(petAsleep, 50, 90);
     message.innerText = "The pet is hibernating for some reason!";
 }
-
