@@ -56,6 +56,30 @@ if(thePet){
     thePet = initialPet;
 }
 
+
+/************Big Comparison Functionality**************/
+const secondsSince = function(currentTime, attribute) {
+    return Math.round((currentTime - thePet[attribute])/1000)
+}
+  let sinceHappy = secondsSince(Date.now(), 'happiness')
+  let sinceHunger = secondsSince(Date.now(), 'hunger')
+  let sinceHealth = secondsSince(Date.now(), 'health')
+  let sinceClean = secondsSince(Date.now(), 'clean')
+  let totalHappScore = sinceHappy + sinceClean + sinceHealth + sinceHunger
+
+//local storage for totalHappScore
+//but this didn't solve the bug I was having
+    totalHappScore = localStorage.getItem("totalHappScore");
+
+if(totalHappScore){
+    console.log("there is a happiness score!");
+    totalHappScore = JSON.parse(totalHappScore);
+}else{
+    let startHappScore = sinceHappy + sinceClean + sinceHealth + sinceHunger
+    console.log("there is no happiness score!");
+    localStorage.setItem("totalHappScore", JSON.stringify(startHappScore));
+}
+
 //click events to save or reset the pet
 newPet.addEventListener("click", makeNewPet);
 savePet.addEventListener("click", saveMyPet);
@@ -66,6 +90,7 @@ function makeNewPet () {
 }
 
 function saveMyPet () {
+    //this is going to get the last recorded pet
     thePet = localStorage.getItem("thePet");
     location.reload();
 }
@@ -96,14 +121,13 @@ setInterval(checkPet,
 setInterval(changeDate, 1000);
 
 /***Change background color and pet image at night***/
-
     let h = now.getHours();
 	if (h > 21 || h < 6){
       document.body.className = "night-time";
       ctx.drawImage(petAsleep, 50, 90);
       message.style.color = "white";
       message.style.innerText = "The pet is sleeping, you should be too!"
-      
+      document.getElementById("time2").style.color = "white";
     }
 	else if(h < 21 || h > 6){
       document.body.className = "day-time";
@@ -111,16 +135,8 @@ setInterval(changeDate, 1000);
       message.style.color = "indigo";
     }
 
-/************Big Comparison Functionality**************/
-const secondsSince = function(currentTime, attribute) {
-    return Math.round((currentTime - thePet[attribute])/1000)
-}
-  let sinceHappy = secondsSince(Date.now(), 'happiness')
-  let sinceHunger = secondsSince(Date.now(), 'hunger')
-  let sinceHealth = secondsSince(Date.now(), 'health')
-  let sinceClean = secondsSince(Date.now(), 'clean')
-  let totalHappScore = sinceHappy + sinceClean + sinceHealth + sinceHunger
-  
+
+
 /**These functions check the pet's needs and update status bars**/
 function checkHappy (){
     if(sinceHappy > 60 * 60 * 24){
