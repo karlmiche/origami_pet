@@ -31,13 +31,14 @@ const newPet = document.getElementById("newpet");
 //canvas details
 canvas.width = 400;
 canvas.height = 400;
+
 //the Pet awakens
 window.onload = function() {
     ctx.drawImage(petAwake, 50, 90);
   };
 
 //********Local Storage Information**************
-var thePet = localStorage.getItem("thePet");
+let thePet = localStorage.getItem("thePet");
 
 if(thePet){
     console.log("there is a pet :-)")
@@ -93,6 +94,22 @@ setInterval(checkPet,
 1000);
 
 setInterval(changeDate, 1000);
+
+/***Change background color and pet image at night***/
+
+    let h = now.getHours();
+	if (h > 21 || h < 6){
+      document.body.className = "night-time";
+      ctx.drawImage(petAsleep, 50, 90);
+      message.style.color = "white";
+      message.style.innerText = "The pet is sleeping, you should be too!"
+      
+    }
+	else if(h < 21 || h > 6){
+      document.body.className = "day-time";
+      ctx.drawImage(petAwake, 50, 90);
+      message.style.color = "indigo";
+    }
 
 /************Big Comparison Functionality**************/
 const secondsSince = function(currentTime, attribute) {
