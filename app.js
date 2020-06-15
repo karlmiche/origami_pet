@@ -27,6 +27,9 @@ const clean = document.getElementById("clean");
 const message = document.getElementById("message");
 const savePet = document.getElementById("savepet");
 const newPet = document.getElementById("newpet");
+const secondsSince = function(currentTime, attribute) {
+    return Math.round((currentTime - thePet[attribute])/1000)
+}
 
 //canvas details
 canvas.width = 400;
@@ -45,42 +48,23 @@ if(thePet){
     //we will want to change local pet to the parsed version of pet
 }else{
     let initialPet = {
-        health: Date.now(),
+        health: Date.now(), 
         hunger: Date.now(),
         happiness: Date.now(),
         clean: Date.now(),
-        // totalHappScore: Date.now(),
     }
-    console.log("there is no pet :(");
-    localStorage.setItem("thePet", JSON.stringify(initialPet));
     thePet = initialPet;
+    initialPet.sinceHappiness = secondsSince(Date.now(), 'happiness')
+    initialPet.sinceHunger = secondsSince(Date.now(), 'hunger'),
+    initialPet.sinceHealth = secondsSince(Date.now(), 'health'),
+    initialPet.sinceClean = secondsSince(Date.now(), 'clean'),
+    initialPet.totalHappScore = thePet.sinceHappiness + thePet.sinceClean + thePet.sinceHealth + thePet.sinceHunger
+    thePet = initialPet;
+    console.log("there is no pet :(");
+    localStorage.setItem("thePet", JSON.stringify(initialPet));  
 }
-
-// //local storage for totalHappScore
-// //but this didn't solve the bug I was having
-// //wrapping it in a function 
-// //and calling it on click events didn't help either
-// totalHappScore = localStorage.getItem("totalHappScore");
-
-// if(totalHappScore){
-//     console.log("there is a happiness score!");
-//     totalHappScore = JSON.parse(totalHappScore);
-// }else{
-//     let startHappScore = sinceHappy + sinceClean + sinceHealth + sinceHunger
-//     console.log("there is no happiness score!");
-//     localStorage.setItem("totalHappScore", JSON.stringify(startHappScore));
-// }
 
 /************Big Comparison Functionality**************/
-const secondsSince = function(currentTime, attribute) {
-    return Math.round((currentTime - thePet[attribute])/1000)
-}
-  let sinceHappy = secondsSince(Date.now(), 'happiness')
-  let sinceHunger = secondsSince(Date.now(), 'hunger')
-  let sinceHealth = secondsSince(Date.now(), 'health')
-  let sinceClean = secondsSince(Date.now(), 'clean')
-  totalHappScore = sinceHappy + sinceClean + sinceHealth + sinceHunger
-
 //click events to save or reset the pet
 newPet.addEventListener("click", makeNewPet);
 savePet.addEventListener("click", saveMyPet);
@@ -98,12 +82,20 @@ function saveMyPet () {
 }
 
 /************dateObject functions**********/
+//updates check functions on second interval
 const now = new Date();
 const currentTime = Date.now();
 
-function changeDate(){
+function tickClock(){
     const now = new Date();
     document.getElementById("time2").innerHTML = now;
+    //update Pet values
+    thePet.sinceHappiness = secondsSince(Date.now(), 'happiness')
+    thePet.sinceHunger = secondsSince(Date.now(), 'hunger'),
+    thePet.sinceHealth = secondsSince(Date.now(), 'health'),
+    thePet.sinceClean = secondsSince(Date.now(), 'clean'),
+    thePet.totalHappScore = thePet.sinceHappiness + thePet.sinceClean + thePet.sinceHealth + thePet.sinceHunger
+    localStorage.setItem("thePet", JSON.stringify(thePet));
 }
 
 function checkPet () {
@@ -111,14 +103,14 @@ function checkPet () {
     checkHungry(Date.now);
     checkHealth(Date.now);
     checkClean(Date.now);
-    happy.innerText = "Happiness: " + sinceHappy;
-    hungry.innerText = "Hunger: " + sinceHunger;
-    clean.innerText = "Hygiene: " + sinceClean;
-    healthy.innerText = "Health: " + sinceHealth;
+    happy.innerText = "Happiness: " + thePet.sinceHappiness;
+    hungry.innerText = "Hunger: " + thePet.sinceHunger;
+    clean.innerText = "Hygiene: " + thePet.sinceClean;
+    healthy.innerText = "Health: " + thePet.sinceHealth;
 }
 
 setInterval(checkPet, 1000);
-setInterval(changeDate, 1000);
+setInterval(tickClock, 1000);
 
 /***Change background color and pet image at night***/
     let h = now.getHours();
@@ -137,18 +129,18 @@ setInterval(changeDate, 1000);
 
 /**These functions check the pet's needs and update status bars**/
 function checkHappy (){
-    if(sinceHappy > 60 * 60 * 24){
+    if(thePet.sinceHappiness > 60 * 60 * 24){
         happy.style.backgroundColor = "red";
         happy.style.width = "68px";
         message.innerText = "Pet is so glum they are hibernating!";
         petHibernate();
         return;
-    }else if(sinceHappy > 60 * 60){
+    }else if(thePet.sinceHappiness > 60 * 60){
         happy.style.backgroundColor = "orange";
         happy.style.width = "136px";
         message.innerText = "Pet is looking really, really sad!";
         return;
-    }else if(sinceHappy > 60 * 60 * 2){
+    }else if(thePet.sinceHappiness > 60 * 60 * 2){
         happy.style.backgroundColor = "yellow";
         happy.style.width = "204px";
         message.innerText = "Pet is unhappy... What will you do?";
@@ -159,19 +151,27 @@ function checkHappy (){
     ctx.drawImage(petAwake, 50, 90);
     }    
 }
+
+/******WIDTH DECREMENT CHALLENGE
+//204px of "playable space" - thinking of a percentage tick so it's like
+//68+ seconds - how many seconds 
+//if the time is less than one hour, and greater than 24 hours, 
+//decrement or have the width be = whatever 
+//decrement width in pixels with the seconds
+*****/
  
 function checkHungry(){
-    if(sinceHunger > 60 * 40){
+    if(thePet.sinceHunger > 60 * 40){
         hungry.style.backgroundColor = "red";
         hungry.style.width = "68px";
         petHibernate();
         return;
-    }else if(sinceHunger > 60 * 30){
+    }else if(thePet.sinceHunger > 60 * 30){
         hungry.style.backgroundColor = "orange";
         hungry.style.width = "136px";
         message.innerText = "Pet is looking very famished!";
         return;
-    }else if(sinceHunger > 60 * 20){
+    }else if(thePet.sinceHunger > 60 * 20){
         console.log("Pet is hungry :(");
         hungry.style.backgroundColor = "yellow";
         hungry.style.width = "204px";
@@ -185,17 +185,17 @@ function checkHungry(){
 }
 
 function checkHealth(){
-    if(sinceHealth > 60 * 60){
+    if(thePet.sinceHealth > 60 * 60){
         healthy.style.backgroundColor = "red";
         healthy.style.width = "68px";
         petHibernate();
         return;
-    }else if(sinceHealth > 60 * 60 * 2){
+    }else if(thePet.sinceHealth > 60 * 60 * 2){
         healthy.style.backgroundColor = "orange";
         healthy.style.width = "136px";
         message.innerText = "Pet is looking very ill!";
         return;
-    }else if(sinceHealth > 60 * 60 * 3){
+    }else if(thePet.sinceHealth > 60 * 60 * 3){
         healthy.style.backgroundColor = "yellow";
         healthy.style.width = "204px";
         message.innerText = "Pet looks a little queasy :(";
@@ -209,17 +209,17 @@ function checkHealth(){
 
 
 function checkClean(){
-    if(sinceClean > 60 * 60){
+    if(thePet.sinceClean > 60 * 60){
         clean.style.backgroundColor = "red";
         clean.style.width = "68px";
         petHibernate();
         return;
-    }else if(sinceClean > 60 * 45){
+    }else if(thePet.sinceClean > 60 * 45){
         clean.style.backgroundColor = "orange";
         clean.style.width = "136px";
         message.innerText = "Pet smells BAD!";
         return;
-    }else if(sinceClean > 60 * 30){
+    }else if(thePet.sinceClean > 60 * 30){
         clean.style.backgroundColor = "yellow";
         clean.style.width = "204px";
         message.innerText = "Pet is a little smelly 🤢";
@@ -232,70 +232,71 @@ function checkClean(){
 }
 
 /****birdNeeds object holds functions for specific game assets****/
+//change everything so it's +=
 birdNeeds = {
     canFood: ()=>{
-        sinceHunger = sinceHunger - 60000;
+        thePet.hunger += 200000;
         message.innerText = "Canned food is delicious AND nutritious!";
     },
     burritoMe: ()=>{
-        sinceHunger = sinceHunger - 120000;
+        thePet.hunger += 600000;
         message.innerText = "Pet's favorite food is Burrito!";
     },
     peaNut: ()=>{
-        sinceHunger = sinceHunger - 20000;
+        thePet.hunger += 500000;
         message.innerText = "Pet doesn't love Peanuts.";
     },
     tacoMe: ()=>{
-        sinceHunger = sinceHunger - 60000;
+        thePet.hunger += 60000;
         message.innerText = "Pet enjoys Tacos.";
     },
     cuteHat: ()=>{
         message.innerText = "Pet feels really cute in this hat!";
-        sinceHappy = sinceHappy - 40000;
+        thePet.happiness += 40000;
     },
     topHat: ()=>{
         message.innerText = "Pet feels very handsome in this hat.";
-        sinceHappy = sinceHappy - 40000;
+        thePet.happiness += 40000;
     },
     presentMe: ()=>{
         message.innerText = "Pet is tearing off the wrapping paper!";
-        sinceHappy = sinceHappy - 50000;
+        thePet.happiness += 50000;
     },
     boBa: ()=>{
         message.innerText = "BOBA!!!";
-        sinceHappy = sinceHappy - 120000;
+        thePet.happiness += 120000;
     },
     playGuitar: ()=>{
         message.innerText = "Pet is pecking at the strings!";
-        sinceHappy = sinceHappy - 20000;
+        thePet.happiness += thePet.happiness + 20000;
     },
     crystalMe: ()=>{
         message.innerText = "This Crystal is mysterious and shiny.";
-        sinceHappy = sinceHappy - 300000;
+        thePet.happiness += 300000;
     },
     pillMe: ()=>{
         message.innerText = "Great! You gave Pet their vitamins.";
-        sinceHealth = sinceHealth - 130000;
+        thePet.health += 130000;
     },
     waterMe: ()=>{
         message.innerText = "Pet was thirsty, but feels better now!";
-        sinceHealth = sinceHealth - 230000;
+        thePet.health += 230000;
     },
     herbMe: ()=>{
         message.innerText = "This herb is very relaxing to Pet.";
-        sinceHealth = sinceHealth - 35000;
+        thePet.health += 35000;
     },
     stethoScope: ()=>{
         message.innerText = "Pet's vitals look better now!";
-        sinceHealth = sinceHealth - 10000;
+        thePet.health += 10000;
     },
     soapMe: ()=>{
         message.innerText = "Pet's feathers are soft and shiny after a wash!";
-        sinceClean = sinceClean - 250000;
+        thePet.clean += 250000;
     },
     brushTeeth: ()=>{
         message.innerText = "Nothing like a clean beak!";
-        sinceClean = sinceClean - 50000;
+        thePet.clean += 50000;
     }
 }   
 
