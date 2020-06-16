@@ -283,7 +283,7 @@ birdNeeds = {
     },
     playGuitar: ()=>{
         message.innerText = "Pet is pecking at the strings!";
-        thePet.happiness += thePet.happiness + 20000;
+        thePet.happiness += 20000;
     },
     crystalMe: ()=>{
         message.innerText = "This Crystal is mysterious and shiny.";
