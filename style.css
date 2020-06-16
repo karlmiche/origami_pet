@@ -146,6 +146,7 @@ span {
 
 .icon-container {
     margin-top: 45px;
+    height: 30px;
     display: flex;
     justify-content: center;
     background: darkgray;
@@ -155,13 +156,12 @@ span {
 }
 
 .icon {
-    width: 45px;
-    height: auto;
+    height: 30px;
+    width: auto;
     opacity: 80%;
 }
 
 .bottom-label{
     width: 400px;
-    padding: 15px;
+    padding: 6px;
 }
-

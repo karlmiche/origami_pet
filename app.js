@@ -75,11 +75,11 @@ function makeNewPet () {
 }
 
 function saveMyPet () {
-    //this is going to get the last recorded pet
-    //I don't know if this really "saves" the pet
     thePet = localStorage.getItem("thePet");
     location.reload();
 }
+
+
 
 /************dateObject functions**********/
 //updates check functions on second interval
@@ -103,51 +103,51 @@ function checkPet () {
     checkHungry(Date.now);
     checkHealth(Date.now);
     checkClean(Date.now);
-    happy.innerText = "Happiness: " + thePet.sinceHappiness;
-    hungry.innerText = "Hunger: " + thePet.sinceHunger;
-    clean.innerText = "Hygiene: " + thePet.sinceClean;
-    healthy.innerText = "Health: " + thePet.sinceHealth;
 }
 
 setInterval(checkPet, 1000);
 setInterval(tickClock, 1000);
 
-/***Change background color and pet image at night***/
-    let h = now.getHours();
-	if (h > 21 || h < 6){
-      document.body.className = "night-time";
-      ctx.drawImage(petAsleep, 50, 90);
-      message.style.color = "white";
-      message.innerText = "The pet is sleeping, you should be too!"
-      document.getElementById("time2").style.color = "white";
-    }
-	else if(h < 21 || h > 6){
-      document.body.className = "day-time";
-      ctx.drawImage(petAwake, 50, 90);
-      message.style.color = "indigo";
-    }
+ /***Change background color and pet image at night***/
+ let h = now.getHours();
+ if (h > 21 || h < 6){
+    document.body.className = "night-time";
+    ctx.drawImage(petAsleep, 50, 90);
+    message.style.color = "white";
+    message.innerText = "The pet is sleeping, you should be too!"
+    document.getElementById("time2").style.color = "white";
+}
+else if(h < 21 || h > 6){
+    document.body.className = "day-time";
+    ctx.drawImage(petAwake, 50, 90);
+    message.style.color = "indigo";
+}
 
 /**These functions check the pet's needs and update status bars**/
 function checkHappy (){
-    if(thePet.sinceHappiness > 60 * 60 * 24){
+    if(thePet.sinceHappiness > 60 * 60 * 1.5){
         happy.style.backgroundColor = "red";
         happy.style.width = "68px";
+        happy.innerText = "Happiness: Depressed";
         message.innerText = "Pet is so glum they are hibernating!";
         petHibernate();
         return;
     }else if(thePet.sinceHappiness > 60 * 60){
         happy.style.backgroundColor = "orange";
         happy.style.width = "136px";
+        happy.innerText = "Happiness: Sad";
         message.innerText = "Pet is looking really, really sad!";
         return;
-    }else if(thePet.sinceHappiness > 60 * 60 * 2){
+    }else if(thePet.sinceHappiness > 60 * 40){
         happy.style.backgroundColor = "yellow";
         happy.style.width = "204px";
+        happy.innerText = "Happiness: Fine";
         message.innerText = "Pet is unhappy... What will you do?";
         return;
     }else{
     happy.style.backgroundColor = "rgb(58, 161, 58)";
     happy.style.width = "272px";
+    happy.innerText = "Happiness: Very Happy";
     ctx.drawImage(petAwake, 50, 90);
     }    
 }
@@ -158,51 +158,62 @@ function checkHappy (){
 //if the time is less than one hour, and greater than 24 hours, 
 //decrement or have the width be = whatever 
 //decrement width in pixels with the seconds
+OOP types in JavaScript
+
+
 *****/
- 
 function checkHungry(){
-    if(thePet.sinceHunger > 60 * 40){
+    if(thePet.sinceHunger > 60 * 30){
         hungry.style.backgroundColor = "red";
         hungry.style.width = "68px";
+        hungry.innerText = "Hunger: Starved";
         petHibernate();
         return;
-    }else if(thePet.sinceHunger > 60 * 30){
+    }else if(thePet.sinceHunger > 60 * 20){
         hungry.style.backgroundColor = "orange";
         hungry.style.width = "136px";
+        hungry.innerText = "Hunger: Starving";
         message.innerText = "Pet is looking very famished!";
         return;
-    }else if(thePet.sinceHunger > 60 * 20){
+    }else if(thePet.sinceHunger > 60 * 10){
         console.log("Pet is hungry :(");
         hungry.style.backgroundColor = "yellow";
         hungry.style.width = "204px";
+        hungry.innerText = "Hunger: Hungry";
         message.innerText = "Pet's stomach is growling audibly!";
         return;
     }else{
         hungry.style.backgroundColor = "rgb(58, 161, 58)";
         hungry.style.width = "272px";
+        hungry.innerText = "Hunger: Full";
         ctx.drawImage(petAwake, 50, 90);
     }
 }
 
+//amount decrement per second depends on width of the bar
 function checkHealth(){
     if(thePet.sinceHealth > 60 * 60){
         healthy.style.backgroundColor = "red";
         healthy.style.width = "68px";
+        healthy.innerText = "Health: Ill";
         petHibernate();
         return;
     }else if(thePet.sinceHealth > 60 * 60 * 2){
         healthy.style.backgroundColor = "orange";
         healthy.style.width = "136px";
+        healthy.innerText = "Health: Very Sick";
         message.innerText = "Pet is looking very ill!";
         return;
     }else if(thePet.sinceHealth > 60 * 60 * 3){
         healthy.style.backgroundColor = "yellow";
         healthy.style.width = "204px";
+        healthy.innerText = "Health: Queasy";
         message.innerText = "Pet looks a little queasy :(";
         return;
     }else{
         healthy.style.backgroundColor = "rgb(58, 161, 58)";
         healthy.style.width = "272px";
+        healthy.innerText = "Health: Excellent"
         ctx.drawImage(petAwake, 50, 90);
     }    
 }
@@ -212,21 +223,25 @@ function checkClean(){
     if(thePet.sinceClean > 60 * 60){
         clean.style.backgroundColor = "red";
         clean.style.width = "68px";
+        clean.innerText = "Hygiene: Poor";
         petHibernate();
         return;
     }else if(thePet.sinceClean > 60 * 45){
         clean.style.backgroundColor = "orange";
         clean.style.width = "136px";
+        clean.innerText = "Hygiene: Smelly";
         message.innerText = "Pet smells BAD!";
         return;
     }else if(thePet.sinceClean > 60 * 30){
         clean.style.backgroundColor = "yellow";
         clean.style.width = "204px";
+        clean.innerText = "Hygiene: Crusty";
         message.innerText = "Pet is a little smelly 🤢";
         return;
     }else{
         clean.style.backgroundColor = "rgb(58, 161, 58)";
         clean.style.width = "272px";
+        clean.innerText = "Hygiene: Clean";
         ctx.drawImage(petAwake, 50, 90);
     }    
 }
