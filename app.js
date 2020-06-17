@@ -35,6 +35,7 @@ const secondsSince = function(currentTime, attribute) {
 canvas.width = 400;
 canvas.height = 400;
 
+
 //the Pet awakens
 window.onload = function() {
     ctx.drawImage(petAwake, 50, 90);
