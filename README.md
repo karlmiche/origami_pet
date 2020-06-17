@@ -1,4 +1,5 @@
 # origami_pet
+https://karlmiche.github.io/origami_pet/
 
 ## Game Idea
 A soothing game with a companion animal with shifting needs, much like the Sims or Tamagotchi. Your origami pet has needs that must be met in real time, and you need to interact with your environment to meet these needs. You need to help your pet thrive by clicking and dragging different environment objects. 
