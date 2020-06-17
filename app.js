@@ -145,10 +145,10 @@ function checkHappy (){
         message.innerText = "Pet is unhappy... What will you do?";
         return;
     }else{
-    happy.style.backgroundColor = "rgb(58, 161, 58)";
-    happy.style.width = "272px";
-    happy.innerText = "Happiness: Very Happy";
-    ctx.drawImage(petAwake, 50, 90);
+        happy.style.backgroundColor = "rgb(58, 161, 58)";
+        happy.style.width = "272px";
+        happy.innerText = "Happiness: Very Happy";
+        ctx.drawImage(petAwake, 50, 90);
     }    
 }
 

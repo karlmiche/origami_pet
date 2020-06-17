@@ -85,6 +85,7 @@ span {
 #pet-awake {
     width: 150px;
     height: auto;
+ 
 }
 
 .heading-canvas {
@@ -164,4 +165,152 @@ span {
 .bottom-label{
     width: 400px;
     padding: 6px;
+}
+
+
+/*******MEDIA QUERY FOR PHONES******/
+
+/* Portrait and Landscape */
+@media screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 3) { 
+
+
+    h3 {
+        display: none;
+    }
+    
+    p {
+        display: none;
+    }
+    
+    span {
+        display: none;
+        }
+    
+    .heading {
+        display: none;
+    }
+    
+    .status-container {
+        font-family: monospace;
+        width: 300px;
+        position: absolute;
+        margin-top: 0em;
+    }
+    
+    .emoji {
+        width: 75px;
+        height: auto;
+    }
+    
+    .emoji:hover {
+        opacity: 50%;
+    }
+    
+    .status-container {
+        display: grid;
+        grid-template-rows: repeat(4, 1fr);
+    }
+    
+    .status {
+        border-radius: 10px;
+        border: 1px groove black;
+        width: 170px;
+        height: 25px;
+        margin-left: 10px;
+        margin-top: 2px;
+        text-align: center;
+        font-family: monospace;
+        font-size: 10px;
+        color: black;
+        background-color: rgb(58, 161, 58);
+    }
+    
+    .canvas-container {
+        width: 300px;
+    }
+    
+    #canvas {
+        border: 3px groove black;
+        background-color: cadetblue;
+    }
+    
+    
+    .heading-canvas {
+        display: none;
+    }
+    
+    .toy-box1 {
+        display: none;
+        }
+    
+    .toy-box2 {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        grid-template-rows: repeat(1, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        margin-top: 30px;;
+    }
+    
+    
+    .time-display2 {
+        display: flex;
+        width: 100px;
+        margin: 0 auto;
+        font-size: 13px;
+        font-family: 'Lexend Tera', sans-serif;
+        color: indigo;
+    }
+    
+    #message {
+        display: flex;
+        width: 100px;
+        margin: 0 auto;
+        font-size: 13px;
+        font-family: 'Lexend Tera', sans-serif;
+        color: indigo;
+    }
+    
+    .storepet {
+        width: 140px;
+        height: 35px;
+        border-radius: 10px;
+        font-family: monospace;
+        background-color: lightblue;
+        color: black;
+    }
+    
+    .new {
+        margin-bottom: 5px;
+        margin-left: 10px;
+    }
+    
+    
+    .icon-container {
+        margin-top: 45px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        background: darkgray;
+        opacity: 80%;
+        font-family: Arial, Helvetica, sans-serif;
+        color: indigo;
+    }
+    
+    .icon {
+        height: 30px;
+        width: auto;
+        opacity: 80%;
+    }
+    
+    .bottom-label{
+        width: 400px;
+        padding: 6px;
+    }
+    
+
+
 }
